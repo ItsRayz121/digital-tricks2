@@ -6,10 +6,10 @@ const SITE_CONFIG_DEFAULTS = {
   version: "1.0",
 
   stats: [
-    { value: "6K+",  label: "Telegram Members" },
-    { value: "3+",   label: "Years Experience" },
-    { value: "100+", label: "Signals Monthly" },
-    { value: "90%",  label: "Win Rate" }
+    { value: "6K+",  label: "YouTube Subscribers" },
+    { value: "7K+",  label: "Telegram Members" },
+    { value: "200+", label: "Videos Published" },
+    { value: "3+",   label: "Years Active" }
   ],
 
   socials: [
