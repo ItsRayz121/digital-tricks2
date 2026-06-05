@@ -336,7 +336,7 @@
   </div><!-- /layout -->
 
   <div class="save-bar">
-    <span id="save-status">Saved to browser storage</span>
+    <span id="save-status"></span>
     <button class="btn btn-ghost" onclick="resetToDefaults()">Reset to Defaults</button>
     <button class="btn btn-gold" onclick="saveAll()">Save Changes</button>
   </div>
@@ -348,12 +348,12 @@
 // ── Password ──────────────────────────────────────────────
 const ADMIN_PASSWORD = "digitaltricks2026";
 
-function tryLogin(){
+async function tryLogin(){
   const val = document.getElementById('pw-input').value;
   if(val === ADMIN_PASSWORD){
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    loadData();
+    await loadData();
     renderAll();
   } else {
     document.getElementById('login-error').style.display = 'block';
@@ -378,27 +378,67 @@ document.querySelectorAll('.nav-item').forEach(item => {
   });
 });
 
+// ── Supabase ──────────────────────────────────────────────
+const SB_URL = 'https://oxjhsilbqimwrlesmpns.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94amhzaWxicWltd3JsZXNtcG5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NTQ0MTcsImV4cCI6MjA5NjIzMDQxN30.C4MSgSB4z5Vnijq28y-CGECpdCm6_AT1oanrZN54f_M';
+const SB_HDR = { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
+
+async function sbGet(){
+  const r = await fetch(`${SB_URL}/rest/v1/site_config?id=eq.1&select=config`, { headers: SB_HDR });
+  const d = await r.json();
+  return d[0]?.config || null;
+}
+
+async function sbSave(cfg){
+  const r = await fetch(`${SB_URL}/rest/v1/site_config?id=eq.1`, {
+    method: 'PATCH',
+    headers: { ...SB_HDR, Prefer: 'return=minimal' },
+    body: JSON.stringify({ config: cfg, updated_at: new Date().toISOString() })
+  });
+  return r;
+}
+
 // ── Data layer ────────────────────────────────────────────
 let config = {};
 
-function loadData(){
-  const saved = localStorage.getItem('dt-admin-config');
-  config = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(SITE_CONFIG_DEFAULTS));
+async function loadData(){
+  showLoading(true);
+  const remote = await sbGet();
+  config = remote || JSON.parse(JSON.stringify(SITE_CONFIG_DEFAULTS));
+  showLoading(false);
 }
 
-function saveAll(){
+async function saveAll(){
   collectAll();
-  localStorage.setItem('dt-admin-config', JSON.stringify(config));
+  const btn = document.querySelector('.topbar-actions .btn-gold');
+  btn.textContent = 'Saving...';
+  btn.disabled = true;
+  const r = await sbSave(config);
+  btn.textContent = 'Save Changes';
+  btn.disabled = false;
   const s = document.getElementById('save-status');
+  if(r.ok){
+    s.style.color = 'var(--green)';
+    s.textContent = '✓ Saved — live on website now';
+  } else {
+    s.style.color = 'var(--red)';
+    s.textContent = '✗ Save failed — check connection';
+  }
   s.style.display = 'inline';
-  setTimeout(() => s.style.display = 'none', 2500);
+  setTimeout(() => s.style.display = 'none', 3000);
 }
 
-function resetToDefaults(){
+async function resetToDefaults(){
   if(!confirm('Reset all settings to defaults?')) return;
   config = JSON.parse(JSON.stringify(SITE_CONFIG_DEFAULTS));
-  localStorage.removeItem('dt-admin-config');
+  await sbSave(config);
   renderAll();
+}
+
+function showLoading(on){
+  const main = document.querySelector('.main');
+  if(on) main.style.opacity = '.4';
+  else   main.style.opacity = '1';
 }
 
 // ── Render ────────────────────────────────────────────────

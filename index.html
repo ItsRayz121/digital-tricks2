@@ -1855,103 +1855,105 @@ document.querySelectorAll('.aff-card').forEach(card => {
 });
 </script>
 
-<!-- Admin config override — applies localStorage config from admin.html -->
+<!-- Supabase real-time config loader -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (function(){
-  const saved = localStorage.getItem('dt-admin-config');
-  if(!saved) return;
-  let cfg;
-  try { cfg = JSON.parse(saved); } catch(e){ return; }
+  const SB_URL = 'https://oxjhsilbqimwrlesmpns.supabase.co';
+  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94amhzaWxicWltd3JsZXNtcG5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NTQ0MTcsImV4cCI6MjA5NjIzMDQxN30.C4MSgSB4z5Vnijq28y-CGECpdCm6_AT1oanrZN54f_M';
+  const db = supabase.createClient(SB_URL, SB_KEY);
 
-  // ── Stats ──────────────────────────────────────────────
-  if(cfg.stats){
-    const els = document.querySelectorAll('.stat-item');
-    cfg.stats.forEach((s, i) => {
-      if(!els[i] || !s.value) return;
-      const v = els[i].querySelector('.stat-num');
-      const l = els[i].querySelector('.stat-lbl');
-      if(v){
-        // parse number + suffix from value like "6K+" or "200+"
-        const num = parseFloat(s.value);
-        const suf = s.value.replace(/[\d.]/g,'').trim();
-        v.dataset.target  = isNaN(num) ? '0' : String(num);
-        v.dataset.suffix  = suf;
-        v.textContent     = s.value;
+  function applyConfig(cfg){
+    if(!cfg) return;
+
+    // Stats
+    if(cfg.stats){
+      document.querySelectorAll('.stat-item').forEach((el, i) => {
+        if(!cfg.stats[i] || !cfg.stats[i].value) return;
+        const v = el.querySelector('.stat-num');
+        const l = el.querySelector('.stat-lbl');
+        if(v){
+          const num = parseFloat(cfg.stats[i].value);
+          const suf = cfg.stats[i].value.replace(/[\d.]/g,'').trim();
+          v.dataset.target = isNaN(num) ? '0' : String(num);
+          v.dataset.suffix = suf;
+          v.textContent    = cfg.stats[i].value;
+        }
+        if(l && cfg.stats[i].label) l.textContent = cfg.stats[i].label;
+      });
+    }
+
+    // Profile photo
+    if(cfg.profilePhoto){
+      const img = document.querySelector('.prof-img img');
+      if(img) img.src = cfg.profilePhoto;
+    }
+
+    // Socials
+    if(cfg.socials && cfg.socials.length){
+      document.querySelectorAll('.soc-grid a.soc-card').forEach((card, i) => {
+        const s = cfg.socials[i]; if(!s) return;
+        if(s.url) card.href = s.url;
+        const p = card.querySelector('.soc-platform');
+        const h = card.querySelector('.soc-handle');
+        const b = card.querySelector('.soc-btn');
+        if(p && s.platform) p.textContent = s.platform;
+        if(h && s.handle)   h.textContent = s.handle;
+        if(b && s.label)    b.textContent = s.label;
+      });
+    }
+
+    // Affiliates
+    if(cfg.affiliates && cfg.affiliates.length){
+      document.querySelectorAll('.aff-card').forEach((card, i) => {
+        const a = cfg.affiliates[i]; if(!a) return;
+        const name = card.querySelector('.aff-name');
+        const desc = card.querySelector('.aff-desc');
+        const deal = card.querySelector('.aff-deal');
+        const link = card.querySelector('a.btn');
+        if(name && a.exchange) name.textContent = a.exchange;
+        if(desc && a.deal)     desc.textContent = a.deal;
+        if(deal && a.code)     deal.textContent = 'Referral Code: ' + a.code;
+        if(link && a.url)      link.href        = a.url;
+      });
+    }
+
+    // Contact — Collaboration
+    if(cfg.contact?.collaboration){
+      const cl = cfg.contact.collaboration;
+      const tgCards = document.querySelectorAll('.contact-card');
+      const collabCard = tgCards[0];
+      if(collabCard){
+        const tg = collabCard.querySelector('a[href*="t.me"]');
+        const wa = collabCard.querySelector('a[href*="wa.me"]');
+        if(tg && cl.telegram?.url){ tg.href = cl.telegram.url; const s=tg.querySelector('.contact-btn-text span'); if(s&&cl.telegram.username) s.textContent=cl.telegram.username; }
+        if(wa && cl.whatsapp?.url){ wa.href = cl.whatsapp.url; const s=wa.querySelector('.contact-btn-text span'); if(s&&cl.whatsapp.number) s.textContent=cl.whatsapp.number; }
       }
-      if(l && s.label) l.textContent = s.label;
-    });
-  }
-
-  // ── Profile photo ──────────────────────────────────────
-  if(cfg.profilePhoto){
-    const img = document.querySelector('.prof-img img');
-    if(img) img.src = cfg.profilePhoto;
-  }
-
-  // ── Socials ────────────────────────────────────────────
-  if(cfg.socials && cfg.socials.length){
-    const cards = document.querySelectorAll('.soc-grid a.soc-card');
-    cfg.socials.forEach((s, i) => {
-      if(!cards[i]) return;
-      if(s.url)      cards[i].href = s.url;
-      const platform = cards[i].querySelector('.soc-platform');
-      const handle   = cards[i].querySelector('.soc-handle');
-      const btn      = cards[i].querySelector('.soc-btn');
-      if(platform && s.platform) platform.textContent = s.platform;
-      if(handle   && s.handle)   handle.textContent   = s.handle;
-      if(btn      && s.label)    btn.textContent       = s.label;
-    });
-  }
-
-  // ── Affiliates ─────────────────────────────────────────
-  if(cfg.affiliates && cfg.affiliates.length){
-    const cards = document.querySelectorAll('.aff-card');
-    cfg.affiliates.forEach((a, i) => {
-      if(!cards[i]) return;
-      const name = cards[i].querySelector('.aff-name');
-      const desc = cards[i].querySelector('.aff-desc');
-      const deal = cards[i].querySelector('.aff-deal');
-      const link = cards[i].querySelector('a.btn');
-      if(name && a.exchange) name.textContent = a.exchange;
-      if(desc && a.deal)     desc.textContent = a.deal;
-      if(deal && a.code)     deal.textContent = 'Referral Code: ' + a.code;
-      if(link && a.url)      link.href        = a.url;
-    });
-  }
-
-  // ── Contact — Collaboration ────────────────────────────
-  if(cfg.contact?.collaboration){
-    const cl = cfg.contact.collaboration;
-    const tgLink = document.querySelector('a[href*="t.me/Toheedahmed1"]');
-    const waLink = document.querySelector('.contact-card:first-child a[href*="wa.me"]');
-    if(tgLink && cl.telegram?.url){
-      tgLink.href = cl.telegram.url;
-      const span = tgLink.querySelector('.contact-btn-text span');
-      if(span && cl.telegram.username) span.textContent = cl.telegram.username;
     }
-    if(waLink && cl.whatsapp?.url){
-      waLink.href = cl.whatsapp.url;
-      const span = waLink.querySelector('.contact-btn-text span');
-      if(span && cl.whatsapp.number) span.textContent = cl.whatsapp.number;
+
+    // Contact — Help
+    if(cfg.contact?.help){
+      const h = cfg.contact.help;
+      const helpCard = document.querySelectorAll('.contact-card')[1];
+      if(helpCard){
+        const tg = helpCard.querySelector('a[href*="t.me"]');
+        const wa = helpCard.querySelector('a[href*="whatsapp"]');
+        if(tg && h.telegram?.url){ tg.href = h.telegram.url; const s=tg.querySelector('.contact-btn-text span'); if(s&&h.telegram.username) s.textContent=h.telegram.username; }
+        if(wa && h.whatsapp?.url){ wa.href = h.whatsapp.url; const s=wa.querySelector('.contact-btn-text strong'); if(s&&h.whatsapp.label) s.textContent=h.whatsapp.label; }
+      }
     }
   }
 
-  // ── Contact — Help ─────────────────────────────────────
-  if(cfg.contact?.help){
-    const h = cfg.contact.help;
-    const tgLink = document.querySelector('a[href*="t.me/DigitalTriicks"]');
-    const waLink = document.querySelector('a[href*="chat.whatsapp.com"]');
-    if(tgLink && h.telegram?.url){
-      tgLink.href = h.telegram.url;
-      const span = tgLink.querySelector('.contact-btn-text span');
-      if(span && h.telegram.username) span.textContent = h.telegram.username;
-    }
-    if(waLink && h.whatsapp?.url){
-      waLink.href = h.whatsapp.url;
-      const strong = waLink.querySelector('.contact-btn-text strong');
-      if(strong && h.whatsapp.label) strong.textContent = h.whatsapp.label;
-    }
-  }
+  // Load config on page open
+  db.from('site_config').select('config').eq('id', 1).single()
+    .then(({ data, error }) => { if(data && !error) applyConfig(data.config); });
+
+  // Real-time: update instantly when admin saves
+  db.channel('site-live')
+    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'site_config' }, payload => {
+      applyConfig(payload.new.config);
+    })
+    .subscribe();
 })();
 </script>
 </body>
