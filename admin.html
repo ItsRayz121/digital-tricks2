@@ -351,22 +351,29 @@ const ADMIN_PASSWORD = "digitaltricks2026";
 async function tryLogin(){
   const val = document.getElementById('pw-input').value;
   if(val === ADMIN_PASSWORD){
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    await loadData();
-    renderAll();
+    sessionStorage.setItem('dt-admin-auth','1');
+    showApp();
   } else {
     document.getElementById('login-error').style.display = 'block';
   }
+}
+async function showApp(){
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  await loadData();
+  renderAll();
 }
 document.getElementById('pw-input').addEventListener('keydown', e => {
   if(e.key === 'Enter') tryLogin();
 });
 function logout(){
+  sessionStorage.removeItem('dt-admin-auth');
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('pw-input').value = '';
 }
+// Auto-login if session still active
+if(sessionStorage.getItem('dt-admin-auth') === '1') showApp();
 
 // ── Nav ───────────────────────────────────────────────────
 document.querySelectorAll('.nav-item').forEach(item => {
@@ -403,8 +410,12 @@ let config = {};
 
 async function loadData(){
   showLoading(true);
-  const remote = await sbGet();
-  config = remote || JSON.parse(JSON.stringify(SITE_CONFIG_DEFAULTS));
+  try {
+    const remote = await sbGet();
+    config = remote || JSON.parse(JSON.stringify(SITE_CONFIG_DEFAULTS));
+  } catch(e){
+    config = JSON.parse(JSON.stringify(SITE_CONFIG_DEFAULTS));
+  }
   showLoading(false);
 }
 
