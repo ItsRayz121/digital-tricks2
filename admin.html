@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Panel — Digital Tricks</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  :root{
+    --black:#0A0A0F;--black2:#111118;--gold:#F5A623;
+    --white:#F0F0F5;--gray:#6B7280;--platinum:#C8C8D4;
+    --border:rgba(255,255,255,.1);--glass:rgba(255,255,255,.04);
+    --red:#E05252;--green:#52C87A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--black);color:var(--white);
+    font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;
+    min-height:100vh;
+  }
+
+  /* ---- LOGIN ---- */
+  #login-screen{
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;
+    background:radial-gradient(ellipse at 50% 40%,rgba(245,166,35,.06) 0%,transparent 60%);
+  }
+  .login-box{
+    width:360px;background:var(--black2);
+    border:1px solid var(--border);border-radius:10px;
+    padding:40px 36px;text-align:center;
+  }
+  .login-box .logo{
+    font-family:'Segoe UI',sans-serif;font-weight:800;
+    font-size:20px;color:var(--gold);letter-spacing:.12em;
+    text-transform:uppercase;display:block;margin-bottom:8px;
+  }
+  .login-box .sub{font-size:12px;color:var(--gray);margin-bottom:28px}
+  .login-box input{
+    width:100%;padding:11px 14px;border-radius:6px;
+    border:1px solid var(--border);background:rgba(255,255,255,.05);
+    color:var(--white);font-size:14px;margin-bottom:14px;outline:none;
+    transition:border-color .2s;
+  }
+  .login-box input:focus{border-color:var(--gold)}
+  .login-box button{
+    width:100%;padding:12px;border-radius:6px;
+    background:var(--gold);color:#000;font-weight:700;font-size:14px;
+    border:none;cursor:pointer;transition:opacity .2s;
+  }
+  .login-box button:hover{opacity:.85}
+  #login-error{
+    color:var(--red);font-size:12px;margin-top:10px;
+    display:none;
+  }
+
+  /* ---- APP SHELL ---- */
+  #app{display:none;min-height:100vh}
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 32px;height:60px;
+    background:var(--black2);border-bottom:1px solid var(--border);
+    position:sticky;top:0;z-index:100;
+  }
+  .topbar-brand{font-weight:800;color:var(--gold);font-size:16px;letter-spacing:.1em}
+  .topbar-actions{display:flex;gap:10px}
+  .btn{
+    padding:8px 18px;border-radius:5px;font-size:12px;font-weight:600;
+    cursor:pointer;border:none;transition:opacity .2s;
+  }
+  .btn-gold{background:var(--gold);color:#000}
+  .btn-ghost{
+    background:transparent;color:var(--platinum);
+    border:1px solid var(--border);
+  }
+  .btn:hover{opacity:.8}
+  .layout{display:flex;min-height:calc(100vh - 60px)}
+  .sidebar{
+    width:200px;flex-shrink:0;
+    background:var(--black2);border-right:1px solid var(--border);
+    padding:20px 0;
+  }
+  .nav-item{
+    display:block;padding:11px 24px;font-size:13px;
+    color:var(--platinum);cursor:pointer;
+    border-left:3px solid transparent;
+    transition:background .15s,color .15s,border-color .15s;
+    user-select:none;
+  }
+  .nav-item:hover{background:var(--glass);color:var(--white)}
+  .nav-item.active{
+    color:var(--gold);border-left-color:var(--gold);
+    background:rgba(245,166,35,.07);
+  }
+  .main{flex:1;padding:36px 40px;max-width:860px}
+  .panel{display:none}
+  .panel.active{display:block}
+
+  /* ---- FORM ELEMENTS ---- */
+  .section-title{
+    font-size:11px;font-weight:700;color:var(--gray);
+    text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px;
+  }
+  .card{
+    background:var(--black2);border:1px solid var(--border);
+    border-radius:8px;padding:24px;margin-bottom:20px;
+  }
+  .card-title{
+    font-size:14px;font-weight:700;color:var(--white);
+    margin-bottom:18px;display:flex;align-items:center;gap:8px;
+  }
+  .row{display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+  .field{display:flex;flex-direction:column;gap:5px;flex:1;min-width:160px}
+  label{font-size:11px;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+  input[type=text],input[type=url],input[type=password]{
+    padding:9px 12px;border-radius:5px;
+    border:1px solid var(--border);background:rgba(255,255,255,.04);
+    color:var(--white);font-size:13px;outline:none;transition:border-color .2s;
+    width:100%;
+  }
+  input:focus{border-color:var(--gold)}
+  .add-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:4px;padding:8px 14px;border-radius:5px;
+    background:rgba(245,166,35,.1);color:var(--gold);
+    font-size:12px;font-weight:600;cursor:pointer;
+    border:1px dashed rgba(245,166,35,.3);transition:background .2s;
+  }
+  .add-btn:hover{background:rgba(245,166,35,.18)}
+  .remove-btn{
+    background:transparent;border:none;color:var(--red);
+    font-size:18px;cursor:pointer;padding:0 4px;line-height:1;
+    transition:opacity .2s;flex-shrink:0;align-self:flex-end;margin-bottom:9px;
+  }
+  .remove-btn:hover{opacity:.7}
+  .save-bar{
+    position:sticky;bottom:0;
+    background:var(--black2);border-top:1px solid var(--border);
+    padding:14px 40px;display:flex;align-items:center;justify-content:flex-end;gap:12px;
+  }
+  #save-status{font-size:12px;color:var(--green);display:none}
+
+  /* ---- EXPORT NOTICE ---- */
+  .export-box{
+    background:rgba(245,166,35,.07);border:1px solid rgba(245,166,35,.25);
+    border-radius:8px;padding:20px 24px;margin-bottom:20px;
+    font-size:13px;line-height:1.7;color:var(--platinum);
+  }
+  .export-box strong{color:var(--gold)}
+  code{
+    background:rgba(255,255,255,.07);padding:2px 6px;
+    border-radius:3px;font-family:monospace;font-size:12px;
+  }
+  pre{
+    background:rgba(0,0,0,.5);border:1px solid var(--border);
+    border-radius:6px;padding:16px;font-size:12px;
+    font-family:monospace;overflow-x:auto;color:#ccc;
+    line-height:1.6;margin-top:12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== LOGIN ==================== -->
+<div id="login-screen">
+  <div class="login-box">
+    <span class="logo">Digital Tricks</span>
+    <p class="sub">Admin Panel — Restricted Access</p>
+    <input type="password" id="pw-input" placeholder="Enter password" autocomplete="current-password">
+    <button onclick="tryLogin()">Login →</button>
+    <p id="login-error">Incorrect password. Try again.</p>
+  </div>
+</div>
+
+<!-- ==================== APP ==================== -->
+<div id="app">
+
+  <header class="topbar">
+    <span class="topbar-brand">DT ADMIN</span>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" onclick="exportConfig()">Export config.js</button>
+      <button class="btn btn-gold" onclick="saveAll()">Save Changes</button>
+      <button class="btn btn-ghost" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar">
+      <span class="nav-item active" data-panel="stats">Stats</span>
+      <span class="nav-item" data-panel="socials">Socials</span>
+      <span class="nav-item" data-panel="affiliates">Affiliates</span>
+      <span class="nav-item" data-panel="contact">Contact Info</span>
+      <span class="nav-item" data-panel="export">Export / Deploy</span>
+    </nav>
+
+    <div class="main">
+
+      <!-- STATS -->
+      <div class="panel active" id="panel-stats">
+        <div class="section-title">Hero Statistics</div>
+        <div class="card">
+          <div class="card-title">Numbers shown on homepage</div>
+          <div id="stats-list"></div>
+          <span class="add-btn" onclick="addStat()">+ Add Stat</span>
+        </div>
+      </div>
+
+      <!-- SOCIALS -->
+      <div class="panel" id="panel-socials">
+        <div class="section-title">Social Media Links</div>
+        <div class="card">
+          <div class="card-title">Manage your social profiles</div>
+          <div id="socials-list"></div>
+          <span class="add-btn" onclick="addSocial()">+ Add Social</span>
+        </div>
+      </div>
+
+      <!-- AFFILIATES -->
+      <div class="panel" id="panel-affiliates">
+        <div class="section-title">Affiliate / Exchange Links</div>
+        <div class="card">
+          <div class="card-title">Exchange partnerships &amp; referral codes</div>
+          <div id="affiliates-list"></div>
+          <span class="add-btn" onclick="addAffiliate()">+ Add Exchange</span>
+        </div>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="panel" id="panel-contact">
+        <div class="section-title">Contact Information</div>
+        <div class="card">
+          <div class="card-title">For Collaboration</div>
+          <div class="row">
+            <div class="field">
+              <label>Telegram Username</label>
+              <input type="text" id="collab-tg-username" placeholder="@Toheedahmed1">
+            </div>
+            <div class="field">
+              <label>Telegram URL</label>
+              <input type="url" id="collab-tg-url" placeholder="https://t.me/Toheedahmed1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>WhatsApp Number</label>
+              <input type="text" id="collab-wa-number" placeholder="+92-304-3962008">
+            </div>
+            <div class="field">
+              <label>WhatsApp URL</label>
+              <input type="url" id="collab-wa-url" placeholder="https://wa.me/923043962008">
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">For Help / Community</div>
+          <div class="row">
+            <div class="field">
+              <label>Telegram Username</label>
+              <input type="text" id="help-tg-username" placeholder="@DigitalTriicks">
+            </div>
+            <div class="field">
+              <label>Telegram URL</label>
+              <input type="url" id="help-tg-url" placeholder="https://t.me/DigitalTriicks">
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>WhatsApp Label</label>
+              <input type="text" id="help-wa-label" placeholder="Join Community">
+            </div>
+            <div class="field">
+              <label>WhatsApp URL</label>
+              <input type="url" id="help-wa-url" placeholder="https://chat.whatsapp.com/...">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPORT -->
+      <div class="panel" id="panel-export">
+        <div class="section-title">Export &amp; Deploy</div>
+        <div class="export-box">
+          <strong>How the admin panel works:</strong><br>
+          Changes you save here are stored in your browser's <code>localStorage</code> and applied live on the main site when opened on the same browser. To make changes permanent on your live site (GitHub + Vercel), click <strong>Export config.js</strong>, replace the file in your GitHub repo, and Vercel will auto-redeploy.
+        </div>
+        <div class="card">
+          <div class="card-title">Export Preview</div>
+          <pre id="export-preview">Click "Export config.js" above to preview.</pre>
+        </div>
+        <div class="card">
+          <div class="card-title">Deployment Steps</div>
+          <pre>1. Make changes in Admin Panel → Save Changes
+2. Click "Export config.js" — file downloads automatically
+3. Open your GitHub repo (github.com/YOUR-USERNAME/digital-tricks)
+4. Click on site-config.js → Edit (pencil icon)
+5. Replace all content with the downloaded file contents
+6. Click "Commit changes"
+7. Vercel detects the push and redeploys in ~30 seconds
+8. Visit your live site to confirm the update</pre>
+        </div>
+      </div>
+
+    </div><!-- /main -->
+  </div><!-- /layout -->
+
+  <div class="save-bar">
+    <span id="save-status">Saved to browser storage</span>
+    <button class="btn btn-ghost" onclick="resetToDefaults()">Reset to Defaults</button>
+    <button class="btn btn-gold" onclick="saveAll()">Save Changes</button>
+  </div>
+
+</div><!-- /app -->
+
+<script src="site-config.js"></script>
+<script>
+// ── Password ──────────────────────────────────────────────
+const ADMIN_PASSWORD = "digitaltricks2026";
+
+function tryLogin(){
+  const val = document.getElementById('pw-input').value;
+  if(val === ADMIN_PASSWORD){
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadData();
+    renderAll();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e => {
+  if(e.key === 'Enter') tryLogin();
+});
+function logout(){
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pw-input').value = '';
+}
+
+// ── Nav ───────────────────────────────────────────────────
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById('panel-' + item.dataset.panel).classList.add('active');
+  });
+});
+
+// ── Data layer ────────────────────────────────────────────
+let config = {};
+
+function loadData(){
+  const saved = localStorage.getItem('dt-admin-config');
+  config = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(SITE_CONFIG_DEFAULTS));
+}
+
+function saveAll(){
+  collectAll();
+  localStorage.setItem('dt-admin-config', JSON.stringify(config));
+  const s = document.getElementById('save-status');
+  s.style.display = 'inline';
+  setTimeout(() => s.style.display = 'none', 2500);
+}
+
+function resetToDefaults(){
+  if(!confirm('Reset all settings to defaults?')) return;
+  config = JSON.parse(JSON.stringify(SITE_CONFIG_DEFAULTS));
+  localStorage.removeItem('dt-admin-config');
+  renderAll();
+}
+
+// ── Render ────────────────────────────────────────────────
+function renderAll(){
+  renderStats();
+  renderSocials();
+  renderAffiliates();
+  renderContact();
+}
+
+// STATS
+function renderStats(){
+  const el = document.getElementById('stats-list');
+  el.innerHTML = '';
+  (config.stats || []).forEach((s, i) => {
+    el.insertAdjacentHTML('beforeend', `
+      <div class="row" data-stat="${i}">
+        <div class="field"><label>Value</label>
+          <input type="text" data-f="value" value="${esc(s.value)}" placeholder="6K+"></div>
+        <div class="field"><label>Label</label>
+          <input type="text" data-f="label" value="${esc(s.label)}" placeholder="Telegram Members"></div>
+        <button class="remove-btn" onclick="removeStat(${i})">×</button>
+      </div>`);
+  });
+}
+function addStat(){
+  config.stats.push({value:'',label:''});
+  renderStats();
+}
+function removeStat(i){
+  config.stats.splice(i,1);
+  renderStats();
+}
+
+// SOCIALS
+function renderSocials(){
+  const el = document.getElementById('socials-list');
+  el.innerHTML = '';
+  (config.socials || []).forEach((s, i) => {
+    el.insertAdjacentHTML('beforeend', `
+      <div class="row" data-social="${i}">
+        <div class="field"><label>Platform</label>
+          <input type="text" data-f="platform" value="${esc(s.platform)}" placeholder="YouTube"></div>
+        <div class="field"><label>Label</label>
+          <input type="text" data-f="label" value="${esc(s.label)}" placeholder="Subscribe"></div>
+        <div class="field" style="flex:2"><label>URL</label>
+          <input type="url" data-f="url" value="${esc(s.url)}" placeholder="https://..."></div>
+        <button class="remove-btn" onclick="removeSocial(${i})">×</button>
+      </div>`);
+  });
+}
+function addSocial(){
+  config.socials.push({platform:'',label:'',url:'',icon:''});
+  renderSocials();
+}
+function removeSocial(i){
+  config.socials.splice(i,1);
+  renderSocials();
+}
+
+// AFFILIATES
+function renderAffiliates(){
+  const el = document.getElementById('affiliates-list');
+  el.innerHTML = '';
+  (config.affiliates || []).forEach((a, i) => {
+    el.insertAdjacentHTML('beforeend', `
+      <div class="card" data-aff="${i}" style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <span style="font-weight:600;font-size:13px;color:var(--white)">${esc(a.exchange)||'Exchange '+(i+1)}</span>
+          <button class="btn btn-ghost" style="font-size:11px;padding:5px 10px" onclick="removeAffiliate(${i})">Remove</button>
+        </div>
+        <div class="row">
+          <div class="field"><label>Exchange Name</label>
+            <input type="text" data-f="exchange" value="${esc(a.exchange)}" placeholder="Binance"></div>
+          <div class="field"><label>Deal Description</label>
+            <input type="text" data-f="deal" value="${esc(a.deal)}" placeholder="20% fee discount"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Referral Code</label>
+            <input type="text" data-f="code" value="${esc(a.code)}" placeholder="DIGITALTRICKS"></div>
+          <div class="field" style="flex:2"><label>Referral URL</label>
+            <input type="url" data-f="url" value="${esc(a.url)}" placeholder="https://..."></div>
+        </div>
+      </div>`);
+  });
+}
+function addAffiliate(){
+  config.affiliates.push({exchange:'',deal:'',code:'',url:'',icon:''});
+  renderAffiliates();
+}
+function removeAffiliate(i){
+  config.affiliates.splice(i,1);
+  renderAffiliates();
+}
+
+// CONTACT
+function renderContact(){
+  const c = config.contact;
+  if(!c) return;
+  document.getElementById('collab-tg-username').value = c.collaboration?.telegram?.username || '';
+  document.getElementById('collab-tg-url').value       = c.collaboration?.telegram?.url      || '';
+  document.getElementById('collab-wa-number').value    = c.collaboration?.whatsapp?.number   || '';
+  document.getElementById('collab-wa-url').value       = c.collaboration?.whatsapp?.url      || '';
+  document.getElementById('help-tg-username').value    = c.help?.telegram?.username          || '';
+  document.getElementById('help-tg-url').value         = c.help?.telegram?.url               || '';
+  document.getElementById('help-wa-label').value       = c.help?.whatsapp?.label             || '';
+  document.getElementById('help-wa-url').value         = c.help?.whatsapp?.url               || '';
+}
+
+// ── Collect ───────────────────────────────────────────────
+function collectAll(){
+  // stats
+  document.querySelectorAll('#stats-list [data-stat]').forEach(row => {
+    const i = +row.dataset.stat;
+    row.querySelectorAll('input[data-f]').forEach(inp => {
+      config.stats[i][inp.dataset.f] = inp.value.trim();
+    });
+  });
+  // socials
+  document.querySelectorAll('#socials-list [data-social]').forEach(row => {
+    const i = +row.dataset.social;
+    row.querySelectorAll('input[data-f]').forEach(inp => {
+      config.socials[i][inp.dataset.f] = inp.value.trim();
+    });
+  });
+  // affiliates
+  document.querySelectorAll('#affiliates-list [data-aff]').forEach(card => {
+    const i = +card.dataset.aff;
+    card.querySelectorAll('input[data-f]').forEach(inp => {
+      config.affiliates[i][inp.dataset.f] = inp.value.trim();
+    });
+  });
+  // contact
+  config.contact = {
+    collaboration: {
+      telegram: {
+        username: document.getElementById('collab-tg-username').value.trim(),
+        url:      document.getElementById('collab-tg-url').value.trim()
+      },
+      whatsapp: {
+        number: document.getElementById('collab-wa-number').value.trim(),
+        url:    document.getElementById('collab-wa-url').value.trim()
+      }
+    },
+    help: {
+      telegram: {
+        username: document.getElementById('help-tg-username').value.trim(),
+        url:      document.getElementById('help-tg-url').value.trim()
+      },
+      whatsapp: {
+        label: document.getElementById('help-wa-label').value.trim(),
+        url:   document.getElementById('help-wa-url').value.trim()
+      }
+    }
+  };
+}
+
+// ── Export ────────────────────────────────────────────────
+function exportConfig(){
+  collectAll();
+  const js = `// site-config.js — generated by Admin Panel on ${new Date().toISOString().slice(0,10)}\nconst SITE_CONFIG_DEFAULTS = ${JSON.stringify(config, null, 2)};\n`;
+  document.getElementById('export-preview').textContent = js;
+  // activate export panel
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelector('[data-panel="export"]').classList.add('active');
+  document.getElementById('panel-export').classList.add('active');
+  // download file
+  const blob = new Blob([js], {type:'text/javascript'});
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(blob),
+    download: 'site-config.js'
+  });
+  a.click();
+}
+
+function esc(str){
+  return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
+</script>
+</body>
+</html>

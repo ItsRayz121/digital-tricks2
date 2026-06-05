@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Tricks | Toheed Ahmad — Crypto Educator &amp; YouTuber</title>
+<meta name="description" content="Toheed Ahmad is a professional crypto educator, YouTuber, and exchange affiliate partner. Learn crypto trading, technical analysis, and DeFi on YouTube @digitaltricks70.">
+<meta property="og:title" content="Digital Tricks | Toheed Ahmad — Crypto Educator &amp; YouTuber">
+<meta property="og:description" content="Professional crypto educator, YouTuber, and affiliate partner. Learn trading from the experts.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://digitaltricks.com">
+<meta property="og:image" content="[OG_IMAGE_URL]">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@Toheedahmed1">
+<link rel="canonical" href="https://digitaltricks.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   RESET & CUSTOM PROPERTIES
+============================================= */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#0A0A0F;
+  --black2:#111118;
+  --black3:#1A1A24;
+  --gold:#F5A623;
+  --gold-dim:#C8891A;
+  --gold-glow:rgba(245,166,35,0.25);
+  --platinum:#C8C8D4;
+  --white:#FFFFFF;
+  --gray:#6B6B7B;
+  --border:rgba(245,166,35,0.12);
+  --glass:rgba(255,255,255,0.025);
+  --glass-border:rgba(255,255,255,0.07);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* =============================================
+   SCROLLBAR
+============================================= */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px}
+
+/* =============================================
+   CUSTOM CURSOR
+============================================= */
+#cur{
+  position:fixed;width:10px;height:10px;
+  background:var(--gold);border-radius:50%;
+  pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 10px var(--gold),0 0 20px var(--gold-glow);
+  transition:width .15s,height .15s;
+}
+#cur-ring{
+  position:fixed;width:34px;height:34px;
+  border:1px solid rgba(245,166,35,.4);border-radius:50%;
+  pointer-events:none;z-index:99998;
+  transform:translate(-50%,-50%);
+}
+
+/* =============================================
+   TYPOGRAPHY UTILITIES
+============================================= */
+.display{font-family:'Bebas Neue',sans-serif;letter-spacing:.04em}
+.mono{font-family:'Space Mono',monospace}
+.gold{color:var(--gold)}
+.platinum{color:var(--platinum)}
+
+.sec-label{
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:.22em;color:var(--gold);
+  text-transform:uppercase;display:block;margin-bottom:14px;
+}
+.sec-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(36px,5.5vw,68px);line-height:.95;
+  color:var(--white);
+}
+
+/* =============================================
+   BUTTONS
+============================================= */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;border-radius:3px;
+  font-family:'DM Sans',sans-serif;font-weight:600;
+  font-size:13px;letter-spacing:.06em;
+  text-decoration:none;transition:all .3s;
+  cursor:none;border:none;outline:none;
+  white-space:nowrap;
+}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.btn-primary{background:var(--gold);color:var(--black)}
+.btn-primary:hover{background:#FFB84D;box-shadow:0 0 28px rgba(245,166,35,.4);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.18)}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+
+/* =============================================
+   FADE-UP ANIMATION
+============================================= */
+.fu{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+.fu.vis{opacity:1;transform:none}
+
+/* =============================================
+   NAVIGATION
+============================================= */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:0 52px;height:70px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .3s,box-shadow .3s;
+}
+#nav.scrolled{
+  background:rgba(10,10,15,.88);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  box-shadow:0 1px 0 var(--border);
+}
+.logo{
+  font-family:'Bebas Neue',sans-serif;font-size:23px;
+  color:var(--white);text-decoration:none;
+  display:flex;align-items:center;gap:10px;
+}
+.logo::before{
+  content:'';width:6px;height:6px;
+  background:var(--gold);border-radius:50%;
+  box-shadow:0 0 8px var(--gold);flex-shrink:0;
+}
+.logo em{color:var(--gold);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:34px;list-style:none}
+.nav-links a{
+  font-family:'DM Sans',sans-serif;font-size:12px;
+  font-weight:500;letter-spacing:.1em;color:var(--platinum);
+  text-decoration:none;text-transform:uppercase;
+  position:relative;transition:color .2s;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;
+  width:0;height:1px;background:var(--gold);
+  transition:width .3s;
+}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
+.nav-cta-link{
+  background:var(--gold)!important;color:var(--black)!important;
+  padding:8px 18px;border-radius:3px;font-weight:700!important;
+}
+.nav-cta-link::after{display:none!important}
+.nav-cta-link:hover{background:#FFB84D!important}
+
+/* hamburger */
+.ham{
+  display:none;flex-direction:column;gap:5px;
+  cursor:none;background:none;border:none;padding:4px;
+}
+.ham span{
+  display:block;width:24px;height:2px;
+  background:var(--white);transition:all .3s;
+  transform-origin:center;
+}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* mobile menu */
+#mob-menu{
+  display:none;
+  position:fixed;top:70px;left:0;right:0;
+  background:rgba(10,10,15,.97);
+  backdrop-filter:blur(20px);
+  padding:28px 32px 36px;z-index:999;
+  border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(-12px);
+  transition:opacity .3s,transform .3s;
+}
+#mob-menu.open{opacity:1;transform:none;display:block}
+#mob-menu ul{list-style:none;display:flex;flex-direction:column;gap:18px}
+#mob-menu a{
+  font-family:'DM Sans',sans-serif;font-size:15px;
+  font-weight:500;color:var(--platinum);
+  text-decoration:none;text-transform:uppercase;
+  letter-spacing:.1em;transition:color .2s;
+}
+#mob-menu a:hover{color:var(--gold)}
+.mob-cta{
+  display:inline-block;margin-top:10px;
+  background:var(--gold);color:var(--black)!important;
+  padding:12px 24px;border-radius:3px;
+  font-weight:700!important;font-size:12px!important;
+}
+
+/* =============================================
+   HERO
+============================================= */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  padding:110px 52px 80px;
+}
+#particle-canvas{position:absolute;inset:0;z-index:0;opacity:.45}
+.hero-gradient{
+  position:absolute;inset:0;z-index:1;
+  background:
+    radial-gradient(ellipse 65% 55% at 72% 48%,rgba(245,166,35,.055) 0%,transparent 70%),
+    radial-gradient(ellipse 50% 80% at 0% 50%,rgba(10,10,15,.75) 0%,transparent 100%);
+}
+.hero-inner{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;
+  max-width:1280px;margin:0 auto;width:100%;
+}
+.eyebrow{
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--gold);letter-spacing:.28em;text-transform:uppercase;
+  display:flex;align-items:center;gap:12px;margin-bottom:22px;
+  opacity:0;animation:fiu .8s ease .25s forwards;
+}
+.eyebrow::before{content:'';width:38px;height:1px;background:var(--gold)}
+.hero-h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(52px,8.5vw,114px);line-height:.92;
+  margin-bottom:26px;
+  opacity:0;animation:fiu .8s ease .45s forwards;
+}
+.hero-h1 .outline{
+  display:block;color:transparent;
+  -webkit-text-stroke:1.5px var(--gold);
+}
+.hero-h1 .solid{display:block;color:var(--white)}
+.hero-sub{
+  font-size:15px;line-height:1.8;color:var(--platinum);
+  max-width:420px;margin-bottom:38px;
+  opacity:0;animation:fiu .8s ease .65s forwards;
+}
+.hero-ctas{
+  display:flex;gap:14px;flex-wrap:wrap;
+  opacity:0;animation:fiu .8s ease .85s forwards;
+}
+
+/* profile */
+.hero-right{
+  display:flex;justify-content:center;align-items:center;
+  opacity:0;animation:fir 1s ease .6s forwards;
+}
+.prof-wrap{position:relative;width:320px;height:320px}
+.ring1{
+  position:absolute;inset:-22px;border-radius:50%;
+  border:1px solid rgba(245,166,35,.18);
+  animation:spin 12s linear infinite;
+}
+.ring1::after{
+  content:'';position:absolute;top:-3px;left:50%;
+  width:8px;height:8px;background:var(--gold);border-radius:50%;
+  transform:translateX(-50%);box-shadow:0 0 10px var(--gold);
+}
+.ring2{
+  position:absolute;inset:-10px;border-radius:50%;
+  border:1px solid rgba(245,166,35,.08);
+  animation:spin 20s linear infinite reverse;
+}
+.prof-img{
+  width:100%;height:100%;border-radius:50%;
+  border:2px solid var(--gold);overflow:hidden;
+  background:var(--black3);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 50px rgba(245,166,35,.18),inset 0 0 40px rgba(0,0,0,.5);
+}
+.prof-img img{width:100%;height:100%;object-fit:cover}
+.prof-placeholder{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:86px;color:var(--gold);opacity:.25;
+}
+.hero-badge{
+  position:absolute;bottom:8px;right:-14px;
+  background:var(--gold);color:var(--black);
+  padding:8px 14px;border-radius:3px;
+  font-family:'Space Mono',monospace;font-size:9px;
+  font-weight:700;letter-spacing:.1em;white-space:nowrap;
+}
+
+@keyframes fiu{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes fir{from{opacity:0;transform:translateX(36px)}to{opacity:1;transform:none}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* =============================================
+   STATS BAR
+============================================= */
+#stats{
+  background:var(--black2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:56px 52px;
+}
+.stats-grid{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.stat-item{
+  text-align:center;padding:16px 36px;
+  border-right:1px solid var(--border);
+}
+.stat-item:last-child{border-right:none}
+.stat-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:58px;color:var(--gold);line-height:1;
+  display:block;
+}
+.stat-lbl{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:.22em;color:var(--platinum);
+  text-transform:uppercase;margin-top:6px;display:block;
+}
+
+/* =============================================
+   ABOUT
+============================================= */
+#about{
+  padding:120px 52px;position:relative;overflow:hidden;
+}
+#about::before{
+  content:'ABOUT';position:absolute;top:60px;right:-10px;
+  font-family:'Bebas Neue',sans-serif;font-size:220px;
+  color:rgba(245,166,35,.025);line-height:1;
+  pointer-events:none;white-space:nowrap;z-index:0;
+}
+.about-inner{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1.3fr;
+  gap:80px;align-items:center;position:relative;z-index:1;
+}
+.about-img-wrap{position:relative}
+.about-frame{
+  width:100%;aspect-ratio:4/5;
+  background:var(--black3);border:1px solid var(--border);
+  overflow:hidden;position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.about-frame::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(245,166,35,.04) 0%,transparent 50%);
+}
+.about-frame img{
+  width:100%;height:100%;object-fit:cover;
+  filter:grayscale(15%);transition:filter .5s;
+}
+.about-frame:hover img{filter:none}
+.about-frame-ph{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:130px;color:var(--gold);opacity:.18;
+}
+.corner{
+  position:absolute;width:18px;height:18px;
+  border-color:var(--gold);border-style:solid;
+}
+.tl{top:10px;left:10px;border-width:2px 0 0 2px}
+.tr{top:10px;right:10px;border-width:2px 2px 0 0}
+.bl{bottom:10px;left:10px;border-width:0 0 2px 2px}
+.br{bottom:10px;right:10px;border-width:0 2px 2px 0}
+.exp-badge{
+  position:absolute;bottom:-18px;right:-18px;
+  background:var(--gold);color:var(--black);
+  padding:18px 22px;border-radius:4px;
+}
+.exp-badge strong{
+  display:block;font-family:'Bebas Neue',sans-serif;
+  font-size:52px;line-height:1;
+}
+.exp-badge span{
+  font-family:'DM Sans',sans-serif;font-size:11px;
+  font-weight:600;text-transform:uppercase;
+  letter-spacing:.1em;opacity:.75;
+}
+.about-bio{
+  font-size:15px;line-height:1.85;
+  color:var(--platinum);margin-bottom:26px;
+}
+.about-bio strong{color:var(--white)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.tag{
+  padding:5px 14px;border:1px solid var(--border);border-radius:2px;
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--platinum);letter-spacing:.05em;
+  transition:all .2s;
+}
+.tag:hover{border-color:var(--gold);color:var(--gold);background:rgba(245,166,35,.05)}
+.quote-block{
+  border-left:3px solid var(--gold);
+  padding:14px 22px;background:rgba(245,166,35,.035);
+  margin-bottom:32px;
+}
+.quote-block p{font-size:15px;font-style:italic;color:var(--white);line-height:1.65}
+
+/* =============================================
+   YOUTUBE / CONTENT
+============================================= */
+#content{padding:120px 52px;background:var(--black2)}
+.content-head{
+  max-width:1280px;margin:0 auto 56px;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  flex-wrap:wrap;gap:20px;
+}
+.vids-grid{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+}
+.vid-card{
+  background:var(--black3);border:1px solid var(--glass-border);
+  border-radius:4px;overflow:hidden;
+  transition:transform .3s,box-shadow .3s;
+}
+.vid-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 48px rgba(0,0,0,.65),0 0 0 1px var(--border);
+}
+.vid-thumb{
+  width:100%;aspect-ratio:16/9;background:var(--black);
+  overflow:hidden;position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.vid-thumb iframe{width:100%;height:100%;border:none;display:block}
+.vid-ph{
+  width:100%;height:100%;position:absolute;inset:0;
+  background:linear-gradient(135deg,#111118,#1A1A24);
+  display:flex;align-items:center;justify-content:center;
+}
+.play-btn{
+  width:54px;height:54px;border-radius:50%;
+  background:rgba(245,166,35,.12);
+  border:1px solid rgba(245,166,35,.3);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s;
+}
+.vid-card:hover .play-btn{background:var(--gold)}
+.vid-card:hover .play-btn svg{fill:var(--black)}
+.vid-info{padding:18px 20px}
+.vid-title{font-size:13px;font-weight:600;color:var(--white);line-height:1.45;margin-bottom:7px}
+.vid-meta{font-family:'Space Mono',monospace;font-size:9px;color:var(--gray);letter-spacing:.06em}
+.view-all{text-align:center;margin-top:44px}
+
+/* =============================================
+   AFFILIATES
+============================================= */
+#affiliates{padding:120px 52px;position:relative}
+.aff-head{max-width:1280px;margin:0 auto 56px;text-align:center}
+.aff-head p{
+  font-size:15px;color:var(--platinum);
+  margin-top:14px;max-width:440px;
+  margin-left:auto;margin-right:auto;line-height:1.7;
+}
+.aff-grid{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+}
+.aff-card{
+  padding:38px 30px;background:var(--glass);
+  border:1px solid var(--glass-border);border-radius:8px;
+  backdrop-filter:blur(10px);position:relative;
+  overflow:hidden;transition:all .3s;
+  transform-style:preserve-3d;
+}
+.aff-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(245,166,35,.06),transparent 60%);
+  opacity:0;transition:opacity .3s;
+}
+.aff-card:hover{
+  border-color:var(--gold);
+  box-shadow:0 24px 64px rgba(0,0,0,.6),0 0 0 1px rgba(245,166,35,.25);
+}
+.aff-card:hover::before{opacity:1}
+.aff-logo{height:38px;margin-bottom:22px;display:flex;align-items:center}
+.aff-name{
+  font-family:'Bebas Neue',sans-serif;font-size:30px;
+  color:var(--white);margin-bottom:8px;
+}
+.aff-desc{
+  font-size:13px;color:var(--platinum);
+  line-height:1.65;margin-bottom:18px;
+}
+.aff-deal{
+  display:flex;align-items:center;gap:8px;
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--gold);padding:9px 13px;
+  background:rgba(245,166,35,.07);
+  border:1px solid rgba(245,166,35,.15);
+  border-radius:3px;margin-bottom:26px;
+  line-height:1.5;
+}
+.aff-deal::before{content:'★';flex-shrink:0}
+.aff-disclaimer{
+  max-width:1280px;margin:28px auto 0;
+  text-align:center;font-size:11px;
+  color:var(--gray);font-family:'Space Mono',monospace;
+}
+
+/* =============================================
+   SOCIAL
+============================================= */
+#social{padding:120px 52px;background:var(--black2)}
+.soc-head{max-width:1280px;margin:0 auto 56px;text-align:center}
+.soc-grid{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+}
+.soc-card{
+  padding:30px 22px;background:var(--black3);
+  border:1px solid var(--glass-border);border-radius:6px;
+  text-align:center;text-decoration:none;display:block;
+  transition:all .35s;position:relative;overflow:hidden;
+}
+.soc-card:hover{transform:translateY(-5px)}
+.soc-icon-wrap{
+  width:58px;height:58px;margin:0 auto 14px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:12px;transition:box-shadow .3s;
+}
+.soc-platform{
+  font-family:'Bebas Neue',sans-serif;font-size:20px;
+  color:var(--white);margin-bottom:4px;
+}
+.soc-handle{
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--gray);letter-spacing:.06em;margin-bottom:14px;
+}
+.soc-btn{
+  display:inline-block;padding:6px 16px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:3px;font-size:10px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--platinum);transition:all .2s;
+}
+.soc-card:hover .soc-btn{background:rgba(255,255,255,.04)}
+.soc-card.yt:hover{border-color:#FF0000;box-shadow:0 12px 36px rgba(255,0,0,.13)}
+.soc-card.tg:hover{border-color:#229ED9;box-shadow:0 12px 36px rgba(34,158,217,.13)}
+.soc-card.tw:hover{border-color:#fff;box-shadow:0 12px 36px rgba(255,255,255,.08)}
+.soc-card.wa:hover{border-color:#25D366;box-shadow:0 12px 36px rgba(37,211,102,.13)}
+
+/* =============================================
+   TESTIMONIALS
+============================================= */
+#testimonials{padding:120px 52px}
+.testi-head{max-width:1280px;margin:0 auto 56px;text-align:center}
+.testi-grid{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:22px;
+  margin-bottom:80px;
+}
+.testi-card{
+  padding:34px;background:var(--black2);
+  border:1px solid var(--glass-border);border-radius:6px;
+  transition:border-color .3s;
+}
+.testi-card:hover{border-color:var(--border)}
+.stars{color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:14px}
+.testi-q{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:42px;color:var(--gold);opacity:.4;
+  line-height:1;margin-bottom:14px;
+}
+.testi-text{font-size:14px;line-height:1.8;color:var(--platinum);margin-bottom:22px}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--black3);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:18px;
+  color:var(--gold);flex-shrink:0;
+}
+.testi-name{font-weight:600;font-size:13px;color:var(--white)}
+.testi-handle{font-family:'Space Mono',monospace;font-size:10px;color:var(--gray)}
+.platform-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:20px;
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:.08em;font-weight:700;margin-bottom:14px;
+}
+.badge-tg{background:rgba(34,158,217,.12);color:#229ED9;border:1px solid rgba(34,158,217,.25)}
+.badge-wa{background:rgba(37,211,102,.12);color:#25D366;border:1px solid rgba(37,211,102,.25)}
+.profit-highlight{
+  display:inline-block;
+  font-family:'Bebas Neue',sans-serif;font-size:32px;
+  color:var(--gold);line-height:1;margin-bottom:10px;
+}
+.profit-label{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:.15em;color:var(--platinum);
+  text-transform:uppercase;display:block;margin-bottom:14px;
+}
+
+/* =============================================
+   PROOF GALLERY (phone frames)
+============================================= */
+/* proof gallery */
+.proof-gallery{
+  max-width:1280px;margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:24px;
+  align-items:start;
+}
+.proof-card{
+  display:flex;flex-direction:column;
+  border-radius:20px;
+  background:var(--black3);
+  border:1px solid var(--glass-border);
+  overflow:hidden;
+  transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  position:relative;
+}
+.proof-card:hover{
+  transform:translateY(-8px) scale(1.01);
+  border-color:var(--gold);
+  box-shadow:0 24px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(245,166,35,.25), 0 0 40px rgba(245,166,35,.08);
+}
+/* notch */
+.proof-notch{
+  position:absolute;top:10px;left:50%;
+  transform:translateX(-50%);
+  width:52px;height:5px;
+  background:rgba(0,0,0,.5);
+  border-radius:3px;z-index:3;
+}
+/* image fills the card */
+.proof-img-wrap{
+  width:100%;
+  overflow:hidden;
+  position:relative;
+}
+.proof-img-wrap img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
+  transition:transform .5s ease;
+}
+.proof-card:hover .proof-img-wrap img{
+  transform:scale(1.03);
+}
+/* gold shimmer on hover */
+.proof-card::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(245,166,35,.06) 0%,transparent 60%);
+  opacity:0;transition:opacity .35s;
+  pointer-events:none;border-radius:20px;
+}
+.proof-card:hover::after{opacity:1}
+/* caption bar */
+.proof-caption{
+  padding:12px 14px;
+  display:flex;align-items:center;gap:8px;
+  border-top:1px solid var(--glass-border);
+}
+.proof-caption svg{flex-shrink:0}
+.proof-caption span{
+  font-family:'Space Mono',monospace;
+  font-size:9px;letter-spacing:.1em;
+  color:var(--gray);text-transform:uppercase;
+  line-height:1.4;
+}
+/* zoom overlay on click */
+.proof-card img{cursor:zoom-in}
+
+/* lightbox */
+#lightbox{
+  display:none;position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.92);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:24px;
+}
+#lightbox.open{display:flex}
+#lightbox img{
+  max-width:min(420px,90vw);
+  max-height:90vh;
+  border-radius:20px;
+  border:2px solid var(--gold);
+  box-shadow:0 0 80px rgba(245,166,35,.2);
+  object-fit:contain;
+}
+#lightbox-close{
+  position:absolute;top:20px;right:24px;
+  font-size:28px;color:var(--white);
+  background:none;border:none;cursor:pointer;
+  opacity:.7;transition:opacity .2s;line-height:1;
+}
+#lightbox-close:hover{opacity:1}
+
+@media(max-width:1024px){.proof-gallery{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){
+  .proof-gallery{grid-template-columns:1fr 1fr;gap:14px}
+  .testi-grid{grid-template-columns:1fr}
+}
+
+/* =============================================
+   CONTACT SECTION
+============================================= */
+#contact{
+  padding:120px 52px;background:var(--black2);
+  position:relative;overflow:hidden;
+}
+#contact::before{
+  content:'';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,166,35,.035) 0%,transparent 70%);
+  pointer-events:none;
+}
+.contact-top{
+  position:relative;z-index:1;
+  max-width:700px;margin:0 auto 72px;
+  text-align:center;
+}
+.contact-top .sec-title{
+  font-size:clamp(38px,6vw,80px);margin-bottom:16px;
+}
+.contact-top p{
+  font-size:15px;color:var(--platinum);line-height:1.75;
+  margin-bottom:32px;
+}
+.contact-top-ctas{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+}
+/* contact type cards */
+.contact-cards{
+  position:relative;z-index:1;
+  max-width:900px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;
+}
+.contact-card{
+  padding:40px 36px;
+  border-radius:8px;
+  border:1px solid var(--glass-border);
+  background:var(--glass);
+  backdrop-filter:blur(10px);
+  transition:border-color .3s,box-shadow .3s;
+}
+.contact-card:hover{
+  border-color:var(--border);
+  box-shadow:0 16px 48px rgba(0,0,0,.5);
+}
+.contact-card-icon{
+  width:48px;height:48px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;
+}
+.contact-card h3{
+  font-family:'Bebas Neue',sans-serif;font-size:28px;
+  color:var(--white);margin-bottom:8px;
+}
+.contact-card p{
+  font-size:13px;color:var(--platinum);
+  line-height:1.7;margin-bottom:28px;
+}
+.contact-btns{
+  display:flex;flex-direction:column;gap:12px;
+}
+.contact-btn{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 18px;border-radius:5px;
+  text-decoration:none;
+  border:1px solid var(--glass-border);
+  background:rgba(255,255,255,.03);
+  transition:all .25s;
+  cursor:none;
+}
+.contact-btn:hover{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.18);
+  transform:translateX(4px);
+}
+.contact-btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.contact-btn-icon{
+  width:36px;height:36px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.contact-btn-text strong{
+  display:block;font-size:13px;font-weight:600;
+  color:var(--white);line-height:1.3;
+}
+.contact-btn-text span{
+  display:block;font-family:'Space Mono',monospace;
+  font-size:10px;color:var(--gray);letter-spacing:.06em;
+}
+.contact-btn-arrow{
+  margin-left:auto;font-size:14px;
+  color:var(--gray);transition:color .2s,transform .2s;
+}
+.contact-btn:hover .contact-btn-arrow{
+  color:var(--white);transform:translateX(2px);
+}
+@media(max-width:768px){
+  .contact-cards{grid-template-columns:1fr}
+}
+
+/* =============================================
+   FOOTER
+============================================= */
+footer{background:var(--black);border-top:1px solid var(--border);padding:60px 52px 30px}
+.footer-grid{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:1.6fr 1fr 1fr;
+  gap:60px;margin-bottom:44px;
+}
+.footer-tagline{
+  font-size:13px;color:var(--gray);line-height:1.75;
+  max-width:260px;margin:14px 0 22px;
+}
+.footer-soc-row{display:flex;gap:10px}
+.footer-soc-row a{
+  width:34px;height:34px;border:1px solid var(--glass-border);
+  border-radius:4px;display:flex;align-items:center;
+  justify-content:center;transition:all .2s;text-decoration:none;
+}
+.footer-soc-row a:hover{
+  border-color:var(--gold);
+  background:rgba(245,166,35,.08);
+}
+.footer-soc-row svg{width:15px;height:15px}
+.footer-col h4{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:.22em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:18px;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:13px;color:var(--platinum);text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--white)}
+.footer-col p{font-size:13px;color:var(--platinum);margin-bottom:10px;line-height:1.6}
+.footer-col p strong{color:var(--white)}
+.footer-col p a{color:var(--gold);text-decoration:none}
+.footer-bottom{
+  max-width:1280px;margin:0 auto;
+  padding-top:22px;border-top:1px solid var(--glass-border);
+  display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:14px;
+}
+.footer-legal{font-size:11px;color:var(--gray);line-height:1.7}
+.footer-legal a{color:var(--gray);text-decoration:none}
+.nfa{
+  font-family:'Space Mono',monospace;font-size:9px;
+  color:var(--gray);letter-spacing:.05em;
+}
+
+/* =============================================
+   YOUTUBE CHANNEL BUTTON
+============================================= */
+.yt-channel-btn{
+  display:inline-flex;align-items:center;gap:18px;
+  padding:18px 28px;border:1px solid rgba(255,255,255,.1);
+  border-radius:6px;background:rgba(255,255,255,.03);
+  text-decoration:none;color:var(--white);
+  max-width:480px;width:100%;
+  transition:all .35s;cursor:none;
+  text-align:left;
+}
+.yt-channel-btn:hover{
+  border-color:#FF0000;
+  box-shadow:0 0 36px rgba(255,0,0,.15);
+  background:rgba(255,0,0,.04);
+  transform:translateY(-3px);
+}
+.yt-icon-wrap{
+  width:52px;height:52px;border-radius:10px;
+  background:rgba(255,0,0,.1);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s;
+}
+.yt-channel-btn:hover .yt-icon-wrap{background:rgba(255,0,0,.2)}
+
+/* =============================================
+   SECTION DIVIDER
+============================================= */
+.divider{
+  max-width:1280px;margin:0 auto;
+  height:1px;
+  background:linear-gradient(to right,transparent,var(--border),transparent);
+}
+
+/* =============================================
+   RESPONSIVE
+============================================= */
+@media(max-width:1024px){
+  #nav,#hero,#stats,#about,#content,#affiliates,#social,#testimonials,#contact,footer{
+    padding-left:32px;padding-right:32px;
+  }
+  #nav{padding-top:0;padding-bottom:0}
+  .hero-inner{grid-template-columns:1fr;text-align:center;gap:44px}
+  .eyebrow{justify-content:center}
+  .hero-sub{margin-left:auto;margin-right:auto}
+  .hero-ctas{justify-content:center}
+  .prof-wrap{width:250px;height:250px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-item:nth-child(2){border-right:none}
+  .stat-item:nth-child(3){border-top:1px solid var(--border)}
+  .about-inner{grid-template-columns:1fr;gap:44px}
+  .about-img-wrap{max-width:380px;margin:0 auto}
+  .vids-grid{grid-template-columns:1fr 1fr}
+  .aff-grid{grid-template-columns:1fr}
+  .soc-grid{grid-template-columns:repeat(2,1fr)}
+  .testi-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:36px}
+  .footer-grid>:first-child{grid-column:1/-1}
+}
+@media(max-width:768px){
+  #nav .nav-links{display:none}
+  .ham{display:flex}
+  .vids-grid{grid-template-columns:1fr}
+  .content-head{flex-direction:column;align-items:flex-start}
+  .footer-grid{grid-template-columns:1fr;gap:28px}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+@media(max-width:480px){
+  .hero-h1{font-size:52px}
+  .soc-grid{grid-template-columns:1fr}
+  .prof-wrap{width:210px;height:210px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+}
+
+/* =============================================
+   FOCUS VISIBLE
+============================================= */
+a:focus-visible,button:focus-visible{
+  outline:2px solid var(--gold);outline-offset:3px;border-radius:2px;
+}
+</style>
+<script src="site-config.js"></script>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cur" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<header>
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <a href="#hero" class="logo" aria-label="Digital Tricks — home">
+    Digital<em>Tricks</em>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#affiliates">Affiliates</a></li>
+    <li><a href="#social">Social</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://t.me/DigitalTriicks" class="nav-cta-link" target="_blank" rel="noopener noreferrer" aria-label="Join the Digital Tricks Telegram community">Join Community</a></li>
+  </ul>
+  <button class="ham" id="hamBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mob-menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div id="mob-menu" role="dialog" aria-label="Mobile navigation">
+  <ul>
+    <li><a href="#about" class="mob-link">About</a></li>
+    <li><a href="#affiliates" class="mob-link">Affiliates</a></li>
+    <li><a href="#social" class="mob-link">Social</a></li>
+    <li><a href="#contact" class="mob-link">Contact</a></li>
+    <li><a href="https://t.me/DigitalTriicks" class="mob-cta mob-link" target="_blank" rel="noopener noreferrer">Join Community →</a></li>
+  </ul>
+</div>
+</header>
+
+<main>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="hero" aria-label="Introduction">
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+  <div class="hero-gradient" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">Crypto Educator · YouTuber · Trader</span>
+      <!-- REPLACE: [CLIENT_TAGLINE] below -->
+      <h1 class="hero-h1">
+        <span class="solid">YOUR EDGE</span>
+        <span class="outline">IN CRYPTO.</span>
+      </h1>
+      <!-- REPLACE: [CLIENT_BIO_SHORT] below -->
+      <p class="hero-sub">
+        Crypto educator, YouTuber, and professional trader helping thousands navigate digital assets — technical analysis, altcoin research, DeFi, and derivatives.
+      </p>
+      <div class="hero-ctas">
+        <a href="https://youtube.com/@digitaltricks70" class="btn btn-primary" target="_blank" rel="noopener noreferrer" aria-label="Watch Digital Tricks on YouTube">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          Watch on YouTube
+        </a>
+        <a href="https://t.me/DigitalTriicks" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" aria-label="Join Digital Tricks Telegram channel">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          Join Telegram
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="prof-wrap">
+        <div class="ring1" aria-hidden="true"></div>
+        <div class="ring2" aria-hidden="true"></div>
+        <div class="prof-img">
+          <img src="profile.jpeg" alt="Toheed Ahmad — Crypto Educator and YouTuber" loading="lazy">
+        </div>
+        <div class="hero-badge" aria-label="Binance affiliate partner">✦ BINANCE PARTNER</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     STATS
+============================================================ -->
+<section id="stats" aria-label="Key statistics">
+  <div class="stats-grid">
+    <div class="stat-item fu">
+      <!-- REPLACE: [YT_SUBSCRIBERS] — update data-target value -->
+      <span class="stat-num" data-target="50" data-suffix="K+" aria-label="YouTube subscribers count">0</span>
+      <span class="stat-lbl">YouTube Subscribers</span>
+    </div>
+    <div class="stat-item fu" style="transition-delay:.1s">
+      <!-- REPLACE: [TELEGRAM_MEMBERS] — update data-target value -->
+      <span class="stat-num" data-target="10" data-suffix="K+" aria-label="Telegram members count">0</span>
+      <span class="stat-lbl">Telegram Members</span>
+    </div>
+    <div class="stat-item fu" style="transition-delay:.2s">
+      <!-- REPLACE: [VIDEOS_COUNT] — update data-target value -->
+      <span class="stat-num" data-target="200" data-suffix="+" aria-label="Videos published count">0</span>
+      <span class="stat-lbl">Videos Published</span>
+    </div>
+    <div class="stat-item fu" style="transition-delay:.3s">
+      <span class="stat-num" data-target="3" data-suffix="+" aria-label="Years active in crypto">0</span>
+      <span class="stat-lbl">Years Active</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT
+============================================================ -->
+<section id="about" aria-labelledby="about-h2">
+  <div class="about-inner" style="grid-template-columns:1fr">
+
+    <div class="fu" style="transition-delay:.15s">
+      <span class="sec-label" aria-hidden="true">// About Me</span>
+      <h2 id="about-h2" class="sec-title">
+        THE FACE BEHIND<br><span class="gold">DIGITAL TRICKS</span>
+      </h2>
+      <br>
+      <!-- REPLACE: [CLIENT_BIO] — update paragraphs below -->
+      <p class="about-bio">
+        I'm <strong>Toheed Ahmad</strong>, a professional crypto educator, trader, and content creator. Through my YouTube channel <strong>@digitaltricks70</strong>, I break down complex market concepts into clear, actionable insights — helping thousands of traders gain their edge in crypto.
+      </p>
+      <p class="about-bio">
+        From spot trading basics to advanced futures strategies, DeFi protocols, and altcoin research — I cover everything you need to trade smarter. My goal is to give every retail trader the institutional edge.
+      </p>
+
+      <div class="tags" role="list" aria-label="Areas of expertise">
+        <span class="tag" role="listitem">Technical Analysis</span>
+        <span class="tag" role="listitem">Altcoin Research</span>
+        <span class="tag" role="listitem">DeFi Protocols</span>
+        <span class="tag" role="listitem">Derivatives</span>
+        <span class="tag" role="listitem">Market Psychology</span>
+        <span class="tag" role="listitem">Risk Management</span>
+      </div>
+
+      <blockquote class="quote-block">
+        <p>"My mission is simple — give every retail trader the same edge that institutional players have had for years."</p>
+      </blockquote>
+
+      <a href="https://youtube.com/@digitaltricks70" class="btn btn-primary" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to Digital Tricks on YouTube">
+        Subscribe on YouTube
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     YOUTUBE CHANNEL BANNER
+============================================================ -->
+<section id="content" aria-labelledby="content-h2" style="padding:80px 52px;background:var(--black2)">
+  <div style="max-width:900px;margin:0 auto;text-align:center" class="fu">
+    <span class="sec-label" aria-hidden="true">// Watch &amp; Learn</span>
+    <h2 id="content-h2" class="sec-title" style="margin-bottom:20px">CRYPTO EDUCATION<br><span class="gold">ON YOUTUBE</span></h2>
+    <p style="font-size:15px;color:var(--platinum);line-height:1.8;max-width:560px;margin:0 auto 40px">
+      200+ in-depth videos covering Bitcoin analysis, altcoin research, DeFi protocols, Binance futures, and live market breakdowns — all free on YouTube.
+    </p>
+    <a href="https://youtube.com/@digitaltricks70"
+       class="yt-channel-btn"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Visit Digital Tricks YouTube channel @digitaltricks70">
+      <span class="yt-icon-wrap" aria-hidden="true">
+        <svg width="28" height="20" viewBox="0 0 576 404" xmlns="http://www.w3.org/2000/svg"><path fill="#FF0000" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+      </span>
+      <span>
+        <span style="display:block;font-size:11px;opacity:.7;letter-spacing:.15em;margin-bottom:2px">SUBSCRIBE NOW</span>
+        <span style="display:block;font-size:18px;font-weight:700">@digitaltricks70</span>
+      </span>
+      <span style="margin-left:auto;font-size:20px;opacity:.6">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     AFFILIATE PARTNERS
+============================================================ -->
+<section id="affiliates" aria-labelledby="aff-h2">
+  <div class="aff-head fu">
+    <span class="sec-label" aria-hidden="true">// Trusted Exchanges</span>
+    <h2 id="aff-h2" class="sec-title">TRUSTED <span class="gold">PARTNERS</span></h2>
+    <p>I personally use and recommend these platforms. Sign up with my links to get exclusive bonuses.</p>
+  </div>
+
+  <div class="aff-grid">
+
+    <!-- BINANCE -->
+    <article class="aff-card fu" aria-label="Binance affiliate partner">
+      <div class="aff-logo" aria-label="Binance logo">
+        <!-- Official Binance SVG -->
+        <svg height="34" viewBox="0 0 126.61 126.61" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="#F3BA2F" d="M38.73,53.2,63.3,28.62,87.89,53.22l14.27-14.29L63.3,0,24.44,38.9Z"/>
+          <path fill="#F3BA2F" d="M0,63.31,14.28,49,28.57,63.31,14.28,77.6Z"/>
+          <path fill="#F3BA2F" d="M38.73,73.41,63.3,98,87.89,73.39l14.27,14.28L63.3,126.61,24.44,87.7l0,0Z"/>
+          <path fill="#F3BA2F" d="M98,63.31l14.29-14.29,14.29,14.29L112.33,77.6Z"/>
+          <path fill="#F3BA2F" d="M77.83,63.3h0L63.3,48.78,52.59,59.49h0L51.28,60.8l-2.27,2.28v0l2.28,2.28L63.31,77.83,77.83,63.3Z"/>
+        </svg>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:30px;color:#F3BA2F;margin-left:10px;line-height:1">BINANCE</span>
+      </div>
+      <h3 class="aff-name">Binance</h3>
+      <p class="aff-desc">World's largest cryptocurrency exchange by trading volume. Access spot, futures, margin, staking, and hundreds of trading pairs.</p>
+      <div class="aff-deal">Up to 20% fee discount — Referral Code: TOFIQUE</div>
+      <a href="https://www.binance.com/join?ref=TOFIQUE" class="btn btn-primary" target="_blank" rel="noopener noreferrer" aria-label="Sign up on Binance with referral code TOFIQUE for fee discount">
+        Sign Up on Binance →
+      </a>
+    </article>
+
+    <!-- OKX -->
+    <article class="aff-card fu" style="transition-delay:.1s" aria-label="OKX affiliate partner">
+      <div class="aff-logo" aria-label="OKX logo">
+        <!-- Official OKX wordmark -->
+        <svg height="32" viewBox="0 0 120 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="0" y="0" width="14" height="14" rx="2" fill="white"/>
+          <rect x="16" y="0" width="14" height="14" rx="2" fill="white"/>
+          <rect x="8" y="8" width="14" height="14" rx="2" fill="#0A0A0F"/>
+          <rect x="32" y="0" width="14" height="14" rx="2" fill="white"/>
+          <rect x="0" y="16" width="14" height="14" rx="2" fill="white"/>
+          <rect x="16" y="16" width="14" height="14" rx="2" fill="white"/>
+          <rect x="8" y="24" width="14" height="14" rx="2" fill="#0A0A0F"/>
+          <rect x="32" y="16" width="14" height="14" rx="2" fill="white"/>
+          <text x="54" y="30" font-family="'DM Sans',sans-serif" font-weight="700" font-size="32" fill="white">OKX</text>
+        </svg>
+      </div>
+      <h3 class="aff-name">OKX</h3>
+      <p class="aff-desc">Advanced trading platform trusted by professionals worldwide. Spot, futures, options, perpetuals, and a full DeFi ecosystem.</p>
+      <div class="aff-deal">Exclusive signup bonus — Referral Code: TOHEED</div>
+      <a href="https://okx.ac/join/TOHEED" class="btn btn-primary" target="_blank" rel="noopener noreferrer" aria-label="Join OKX with referral code TOHEED for signup bonus">
+        Join OKX →
+      </a>
+    </article>
+
+    <!-- BITGET -->
+    <article class="aff-card fu" style="transition-delay:.2s" aria-label="Bitget affiliate partner">
+      <div class="aff-logo" aria-label="Bitget logo">
+        <!-- Bitget gradient wordmark -->
+        <svg height="32" viewBox="0 0 130 38" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#00FFA3"/>
+              <stop offset="100%" stop-color="#00C4FF"/>
+            </linearGradient>
+          </defs>
+          <text x="0" y="32" font-family="'DM Sans',sans-serif" font-weight="800" font-size="34" fill="url(#bgGrad)">Bitget</text>
+        </svg>
+      </div>
+      <h3 class="aff-name">Bitget</h3>
+      <p class="aff-desc">Leading copy trading platform and futures exchange. Mirror top traders automatically and earn bonuses from day one.</p>
+      <div class="aff-deal">Exclusive welcome bonus — Referral Code: D5YWHC</div>
+      <a href="https://partner.bitget.site/bg/D5YWHC" class="btn btn-primary" target="_blank" rel="noopener noreferrer" aria-label="Join Bitget with referral code D5YWHC for welcome bonus">
+        Join Bitget →
+      </a>
+    </article>
+
+  </div>
+
+  <p class="aff-disclaimer" role="note">
+    ⚠ These are affiliate referral links. I may earn a commission at no extra cost to you. Always do your own research before trading.
+  </p>
+</section>
+
+<!-- ============================================================
+     SOCIAL MEDIA
+============================================================ -->
+<section id="social" aria-labelledby="soc-h2">
+  <div class="soc-head fu">
+    <span class="sec-label" aria-hidden="true">// Find Me Everywhere</span>
+    <h2 id="soc-h2" class="sec-title">ALL MY <span class="gold">CHANNELS</span></h2>
+  </div>
+
+  <div class="soc-grid">
+
+    <!-- YouTube -->
+    <a href="https://youtube.com/@digitaltricks70" class="soc-card yt fu" target="_blank" rel="noopener noreferrer" aria-label="Digital Tricks YouTube channel — subscribe for crypto education">
+      <div class="soc-icon-wrap" style="background:rgba(255,0,0,.08)">
+        <svg width="38" height="27" viewBox="0 0 576 404" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="#FF0000" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/>
+        </svg>
+      </div>
+      <p class="soc-platform">YouTube</p>
+      <p class="soc-handle">@digitaltricks70</p>
+      <span class="soc-btn">Subscribe</span>
+    </a>
+
+    <!-- Telegram Channel -->
+    <a href="https://t.me/DigitalTriicks" class="soc-card tg fu" style="transition-delay:.05s" target="_blank" rel="noopener noreferrer" aria-label="Join the Digital Tricks Telegram channel for crypto signals and updates">
+      <div class="soc-icon-wrap" style="background:rgba(34,158,217,.08)">
+        <svg width="36" height="36" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="tg1" x1="120" y1="4" x2="120" y2="236" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2AABEE"/><stop offset="1" stop-color="#229ED9"/></linearGradient></defs>
+          <circle cx="120" cy="120" r="120" fill="url(#tg1)"/>
+          <path fill="white" d="M81.229 128.772l14.237 39.406s1.78 3.687 3.686 3.687 30.255-29.492 30.255-29.492l31.525-60.89L81.737 118.6z"/>
+          <path fill="#C8DAEA" d="M100.106 138.878l-2.733 29.046s-1.144 8.9 7.754 0 17.415-15.763 17.415-15.763"/>
+          <path fill="#A9C9DD" d="M81.486 130.178l-40.899-13.03s-4.895-1.98-3.332-6.476c.327-.934.984-1.732 2.95-3.093 9.082-6.326 168.405-63.48 168.405-63.48s4.502-1.52 7.157-.51a3.864 3.864 0 012.36 2.868c.25 1.98.35 5.93-.15 11.66l-27.36 172.09s-1.58 12.43-12.93 12.91c-4.65.2-10.39-1.06-17.23-6.58-6.84-5.52-48.01-34.27-56.54-40.49a1.59 1.59 0 01-.68-1.24c-.11-1.15.83-2.58.83-2.58s65.04-58 67.24-65.83c.17-.6-.48-.9-1.35-.64-4.8 1.77-88.45 54.63-97.72 60.38z"/>
+        </svg>
+      </div>
+      <p class="soc-platform">Telegram</p>
+      <p class="soc-handle">@DigitalTriicks</p>
+      <span class="soc-btn">Join Channel</span>
+    </a>
+
+    <!-- Twitter/X -->
+    <a href="https://x.com/Toheedahmed1" class="soc-card tw fu" style="transition-delay:.1s" target="_blank" rel="noopener noreferrer" aria-label="Follow Toheed Ahmad on X (Twitter) for crypto updates">
+      <div class="soc-icon-wrap" style="background:rgba(255,255,255,.05)">
+        <svg width="30" height="30" viewBox="0 0 1200 1227" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="white" d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"/>
+        </svg>
+      </div>
+      <p class="soc-platform">Twitter / X</p>
+      <p class="soc-handle">@Toheedahmed1</p>
+      <span class="soc-btn">Follow</span>
+    </a>
+
+    <!-- WhatsApp Direct -->
+    <a href="https://wa.me/923043962008" class="soc-card wa fu" style="transition-delay:.15s" target="_blank" rel="noopener noreferrer" aria-label="Message Toheed Ahmad directly on WhatsApp">
+      <div class="soc-icon-wrap" style="background:rgba(37,211,102,.08)">
+        <svg width="34" height="34" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="#25D366" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+      </div>
+      <p class="soc-platform">WhatsApp</p>
+      <p class="soc-handle">+92-304-3962008</p>
+      <span class="soc-btn">Message</span>
+    </a>
+
+    <!-- WhatsApp Group -->
+    <a href="https://chat.whatsapp.com/CNEuctUsWEdDW4mpeIXOcq?mode=wwt" class="soc-card wa fu" style="transition-delay:.2s" target="_blank" rel="noopener noreferrer" aria-label="Join the Digital Tricks WhatsApp group">
+      <div class="soc-icon-wrap" style="background:rgba(37,211,102,.08)">
+        <svg width="34" height="34" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="#25D366" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+      </div>
+      <p class="soc-platform">WA Group</p>
+      <p class="soc-handle">Digital Tricks Group</p>
+      <span class="soc-btn">Join Group</span>
+    </a>
+
+    <!-- Telegram Personal -->
+    <a href="https://t.me/Toheedahmed1" class="soc-card tg fu" style="transition-delay:.25s" target="_blank" rel="noopener noreferrer" aria-label="Send a direct message to Toheed Ahmad on Telegram">
+      <div class="soc-icon-wrap" style="background:rgba(34,158,217,.08)">
+        <svg width="36" height="36" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="tg2" x1="120" y1="4" x2="120" y2="236" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2AABEE"/><stop offset="1" stop-color="#229ED9"/></linearGradient></defs>
+          <circle cx="120" cy="120" r="120" fill="url(#tg2)"/>
+          <path fill="white" d="M81.229 128.772l14.237 39.406s1.78 3.687 3.686 3.687 30.255-29.492 30.255-29.492l31.525-60.89L81.737 118.6z"/>
+          <path fill="#C8DAEA" d="M100.106 138.878l-2.733 29.046s-1.144 8.9 7.754 0 17.415-15.763 17.415-15.763"/>
+          <path fill="#A9C9DD" d="M81.486 130.178l-40.899-13.03s-4.895-1.98-3.332-6.476c.327-.934.984-1.732 2.95-3.093 9.082-6.326 168.405-63.48 168.405-63.48s4.502-1.52 7.157-.51a3.864 3.864 0 012.36 2.868c.25 1.98.35 5.93-.15 11.66l-27.36 172.09s-1.58 12.43-12.93 12.91c-4.65.2-10.39-1.06-17.23-6.58-6.84-5.52-48.01-34.27-56.54-40.49a1.59 1.59 0 01-.68-1.24c-.11-1.15.83-2.58.83-2.58s65.04-58 67.24-65.83c.17-.6-.48-.9-1.35-.64-4.8 1.77-88.45 54.63-97.72 60.38z"/>
+        </svg>
+      </div>
+      <p class="soc-platform">DM Me</p>
+      <p class="soc-handle">@Toheedahmed1</p>
+      <span class="soc-btn">Message</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS + PROOF GALLERY
+============================================================ -->
+<section id="testimonials" aria-labelledby="testi-h2">
+  <div class="testi-head fu">
+    <span class="sec-label" aria-hidden="true">// Real Results, Real People</span>
+    <h2 id="testi-h2" class="sec-title">WHAT THE COMMUNITY <span class="gold">SAYS</span></h2>
+  </div>
+
+  <!-- Proof Screenshot Gallery -->
+  <div style="max-width:1280px;margin:0 auto 32px;text-align:center" class="fu">
+    <span class="sec-label" aria-hidden="true">// Verified Proof</span>
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,48px);color:var(--white);margin-bottom:8px">
+      REAL SCREENSHOTS FROM <span class="gold">THE COMMUNITY</span>
+    </h3>
+    <p style="font-size:12px;color:var(--gray);font-family:'Space Mono',monospace;letter-spacing:.08em">Unedited · Directly from Telegram &amp; WhatsApp · Click to enlarge</p>
+  </div>
+
+  <div class="proof-gallery">
+
+    <!-- proof1 — Digital Tricks channel -->
+    <div class="proof-card fu" role="img" aria-label="Digital Tricks Telegram channel — community profit messages, 6K subscribers">
+      <div class="proof-notch" aria-hidden="true"></div>
+      <div class="proof-img-wrap">
+        <img src="proof1.jpeg"
+             alt="Digital Tricks Telegram channel showing members celebrating profits — 6K subscribers"
+             loading="lazy"
+             onclick="openLightbox(this.src, this.alt)">
+      </div>
+      <div class="proof-caption">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#229ED9" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        <span>@DigitalTriicks · 6K Members</span>
+      </div>
+    </div>
+
+    <!-- proof2 — Cryptovrv $70 profit DM -->
+    <div class="proof-card fu" style="transition-delay:.08s" role="img" aria-label="Telegram DM — member achieved 70 dollar profit, 100 dollar monthly target completed">
+      <div class="proof-notch" aria-hidden="true"></div>
+      <div class="proof-img-wrap">
+        <img src="proof2.jpeg"
+             alt="Telegram DM — Cryptovrv achieved 70 dollar highest profit, monthly 100 dollar target completed"
+             loading="lazy"
+             onclick="openLightbox(this.src, this.alt)">
+      </div>
+      <div class="proof-caption">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#229ED9" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        <span>Cryptovrv · $70 Profit DM</span>
+      </div>
+    </div>
+
+    <!-- proof3 — Digital Tricks Army group -->
+    <div class="proof-card fu" style="transition-delay:.16s" role="img" aria-label="Digital Tricks Army Telegram group — Khan Zada earned 200 plus dollars">
+      <div class="proof-notch" aria-hidden="true"></div>
+      <div class="proof-img-wrap">
+        <img src="proof3.jpeg"
+             alt="Digital Tricks Army Telegram group — Khan Zada: 200+ dollars profit, community members celebrating"
+             loading="lazy"
+             onclick="openLightbox(this.src, this.alt)">
+      </div>
+      <div class="proof-caption">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#229ED9" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        <span>Digital Tricks Army · Group</span>
+      </div>
+    </div>
+
+    <!-- proof4 — WhatsApp $59.37 proof -->
+    <div class="proof-card fu" style="transition-delay:.24s" role="img" aria-label="WhatsApp screenshot showing 59.37 USD portfolio profit">
+      <div class="proof-notch" aria-hidden="true"></div>
+      <div class="proof-img-wrap">
+        <img src="proof4.jpeg"
+             alt="WhatsApp — member shows 59.37 USD portfolio value with Alhamdulillah celebration"
+             loading="lazy"
+             onclick="openLightbox(this.src, this.alt)">
+      </div>
+      <div class="proof-caption">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <span>WhatsApp · $59.37 Portfolio</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot viewer" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()" aria-label="Close screenshot viewer">✕</button>
+  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+</div>
+
+<!-- ============================================================
+     CONTACT
+============================================================ -->
+<section id="contact" aria-labelledby="contact-h2">
+
+  <div class="contact-top fu">
+    <span class="sec-label" aria-hidden="true">// Get In Touch</span>
+    <h2 id="contact-h2" class="sec-title">
+      LET'S CONNECT &amp;<br><span class="gold">GROW TOGETHER</span>
+    </h2>
+    <p>Whether you want to collaborate or need help with your trading journey — reach out directly.</p>
+  </div>
+
+  <div class="contact-cards fu" style="transition-delay:.1s">
+
+    <!-- Card 1: Collaboration -->
+    <div class="contact-card">
+      <div class="contact-card-icon" style="background:rgba(245,166,35,.12)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#F5A623" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/><path d="M0 0h24v24H0z" fill="none"/><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      </div>
+      <h3>CONTACT FOR COLLABORATION</h3>
+      <p>Brand deals, sponsored content, joint ventures, or any business partnership — let's talk strategy.</p>
+      <div class="contact-btns">
+        <a href="https://t.me/Toheedahmed1" class="contact-btn" target="_blank" rel="noopener noreferrer" aria-label="Telegram @Toheedahmed1">
+          <div class="contact-btn-icon" style="background:rgba(34,158,217,.15)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#229ED9" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </div>
+          <div class="contact-btn-text">
+            <strong>Telegram</strong>
+            <span>@Toheedahmed1</span>
+          </div>
+          <span class="contact-btn-arrow">→</span>
+        </a>
+        <a href="https://wa.me/923043962008" class="contact-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +92-304-3962008">
+          <div class="contact-btn-icon" style="background:rgba(37,211,102,.15)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          </div>
+          <div class="contact-btn-text">
+            <strong>WhatsApp</strong>
+            <span>+92-304-3962008</span>
+          </div>
+          <span class="contact-btn-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Card 2: Help -->
+    <div class="contact-card">
+      <div class="contact-card-icon" style="background:rgba(200,200,212,.08)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#C8C8D4" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+      </div>
+      <h3>CONTACT FOR HELP</h3>
+      <p>Need trading signals, platform guidance, or community support? Join or message directly.</p>
+      <div class="contact-btns">
+        <a href="https://t.me/DigitalTriicks" class="contact-btn" target="_blank" rel="noopener noreferrer" aria-label="Telegram channel @DigitalTriicks">
+          <div class="contact-btn-icon" style="background:rgba(34,158,217,.15)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#229ED9" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </div>
+          <div class="contact-btn-text">
+            <strong>Telegram Channel</strong>
+            <span>@DigitalTriicks</span>
+          </div>
+          <span class="contact-btn-arrow">→</span>
+        </a>
+        <a href="https://chat.whatsapp.com/CNEuctUsWEdDW4mpeIXOcq" class="contact-btn" target="_blank" rel="noopener noreferrer" aria-label="Join Digital Tricks WhatsApp group">
+          <div class="contact-btn-icon" style="background:rgba(37,211,102,.15)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          </div>
+          <div class="contact-btn-text">
+            <strong>WhatsApp Group</strong>
+            <span>Join Community</span>
+          </div>
+          <span class="contact-btn-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div>
+      <a href="#hero" class="logo" aria-label="Digital Tricks — back to top">
+        Digital<em>Tricks</em>
+      </a>
+      <!-- REPLACE: [CLIENT_TAGLINE] below -->
+      <p class="footer-tagline">Crypto education, market analysis, and trading insights for the next generation of digital asset traders.</p>
+      <nav aria-label="Footer social links">
+        <div class="footer-soc-row">
+          <a href="https://youtube.com/@digitaltricks70" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="#FF0000" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="https://t.me/DigitalTriicks" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" fill="#229ED9" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <a href="https://x.com/Toheedahmed1" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <svg viewBox="0 0 1200 1227" fill="white" aria-hidden="true"><path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163Z"/></svg>
+          </a>
+          <a href="https://wa.me/923043962008" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#affiliates">Affiliates</a></li>
+        <li><a href="#social">Social</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <p><strong>YouTube</strong><br><a href="https://youtube.com/@digitaltricks70" target="_blank" rel="noopener noreferrer">@digitaltricks70</a></p>
+      <p><strong>Telegram</strong><br><a href="https://t.me/DigitalTriicks" target="_blank" rel="noopener noreferrer">@DigitalTriicks</a></p>
+      <p><strong>WhatsApp</strong><br><a href="https://wa.me/923043962008" target="_blank" rel="noopener noreferrer">+92-304-3962008</a></p>
+      <p><strong>Twitter / X</strong><br><a href="https://x.com/Toheedahmed1" target="_blank" rel="noopener noreferrer">@Toheedahmed1</a></p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <p>© 2026 Toheed Ahmad | Digital Tricks. All rights reserved.</p>
+      <p>Affiliates: <a href="https://www.binance.com/join?ref=TOFIQUE" target="_blank" rel="noopener noreferrer">Binance (TOFIQUE)</a> · <a href="https://okx.ac/join/TOHEED" target="_blank" rel="noopener noreferrer">OKX (TOHEED)</a> · <a href="https://partner.bitget.site/bg/D5YWHC" target="_blank" rel="noopener noreferrer">Bitget (D5YWHC)</a></p>
+    </div>
+    <p class="nfa">⚠ NOT FINANCIAL ADVICE · DYOR · TRADE AT YOUR OWN RISK</p>
+  </div>
+</footer>
+
+<script>
+/* =============================================
+   CURSOR
+============================================= */
+const cur = document.getElementById('cur');
+const curRing = document.getElementById('cur-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+});
+
+(function tick() {
+  rx += (mx - rx) * .12; ry += (my - ry) * .12;
+  curRing.style.left = rx + 'px'; curRing.style.top = ry + 'px';
+  requestAnimationFrame(tick);
+})();
+
+document.querySelectorAll('a,button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cur.style.width = '16px'; cur.style.height = '16px';
+    curRing.style.width = '46px'; curRing.style.height = '46px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cur.style.width = '10px'; cur.style.height = '10px';
+    curRing.style.width = '34px'; curRing.style.height = '34px';
+  });
+});
+
+/* =============================================
+   NAVBAR SCROLL
+============================================= */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* =============================================
+   HAMBURGER / MOBILE MENU
+============================================= */
+const hamBtn = document.getElementById('hamBtn');
+const mobMenu = document.getElementById('mob-menu');
+let menuOpen = false;
+
+hamBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  hamBtn.classList.toggle('open', menuOpen);
+  mobMenu.classList.toggle('open', menuOpen);
+  hamBtn.setAttribute('aria-expanded', menuOpen);
+  mobMenu.style.display = menuOpen ? 'block' : 'none';
+});
+
+document.querySelectorAll('.mob-link').forEach(l => {
+  l.addEventListener('click', () => {
+    menuOpen = false;
+    hamBtn.classList.remove('open');
+    mobMenu.classList.remove('open');
+    mobMenu.style.display = 'none';
+    hamBtn.setAttribute('aria-expanded', 'false');
+  });
+});
+mobMenu.style.display = 'none';
+
+/* =============================================
+   LIGHTBOX
+============================================= */
+function openLightbox(src, alt) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  img.src = src; img.alt = alt;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+/* =============================================
+   PARTICLE CANVAS
+============================================= */
+(function() {
+  const canvas = document.getElementById('particle-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, pts = [];
+  const N = 75, GOLD = 'rgba(245,166,35,';
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function Pt() { this.init(); }
+  Pt.prototype.init = function() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.r = Math.random() * 1.4 + .3;
+    this.vx = (Math.random() - .5) * .28;
+    this.vy = (Math.random() - .5) * .28;
+    this.a = Math.random() * .35 + .08;
+  };
+  Pt.prototype.update = function() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.init();
+  };
+  Pt.prototype.draw = function() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = GOLD + this.a + ')';
+    ctx.fill();
+  };
+
+  function drawLines() {
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < 115) {
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x, pts[i].y);
+          ctx.lineTo(pts[j].x, pts[j].y);
+          ctx.strokeStyle = GOLD + (.055 * (1 - d/115)) + ')';
+          ctx.lineWidth = .5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    pts.forEach(p => { p.update(); p.draw(); });
+    drawLines();
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  for (let i = 0; i < N; i++) pts.push(new Pt());
+  draw();
+  window.addEventListener('resize', resize, { passive: true });
+})();
+
+/* =============================================
+   SCROLL FADE-UP (Intersection Observer)
+============================================= */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); }});
+}, { threshold: .08, rootMargin: '0px 0px -32px 0px' });
+document.querySelectorAll('.fu').forEach(el => io.observe(el));
+
+/* =============================================
+   STAT COUNTER ANIMATION
+============================================= */
+function countUp(el) {
+  const target = +el.dataset.target;
+  const suf = el.dataset.suffix || '';
+  const dur = 1800;
+  const step = target / (dur / 16);
+  let cur = 0;
+  const t = setInterval(() => {
+    cur = Math.min(cur + step, target);
+    el.textContent = Math.floor(cur) + suf;
+    if (cur >= target) clearInterval(t);
+  }, 16);
+}
+
+const statsIo = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) {
+    document.querySelectorAll('.stat-num[data-target]').forEach(countUp);
+    statsIo.disconnect();
+  }
+}, { threshold: .25 });
+const statsEl = document.getElementById('stats');
+if (statsEl) statsIo.observe(statsEl);
+
+/* =============================================
+   AFFILIATE CARD 3D TILT
+============================================= */
+document.querySelectorAll('.aff-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const dx = (e.clientX - (r.left + r.width/2)) / (r.width/2);
+    const dy = (e.clientY - (r.top + r.height/2)) / (r.height/2);
+    card.style.transition = 'border-color .3s,box-shadow .3s';
+    card.style.transform = `perspective(700px) rotateY(${dx*5}deg) rotateX(${-dy*5}deg) translateZ(6px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transition = 'all .5s ease';
+    card.style.transform = 'perspective(700px) rotateY(0) rotateX(0) translateZ(0)';
+  });
+});
+</script>
+
+<!-- Admin config override — applies localStorage config from admin.html -->
+<script>
+(function(){
+  const saved = localStorage.getItem('dt-admin-config');
+  if(!saved) return;
+  let cfg;
+  try { cfg = JSON.parse(saved); } catch(e){ return; }
+
+  // Stats
+  if(cfg.stats){
+    const els = document.querySelectorAll('.stat-item');
+    cfg.stats.forEach((s, i) => {
+      if(!els[i]) return;
+      const v = els[i].querySelector('.stat-value');
+      const l = els[i].querySelector('.stat-label');
+      if(v && s.value) v.textContent = s.value;
+      if(l && s.label) l.textContent = s.label;
+    });
+  }
+
+  // Contact — Collaboration card
+  if(cfg.contact?.collaboration){
+    const cl = cfg.contact.collaboration;
+    const tgLink = document.querySelector('a[href*="t.me/Toheedahmed1"]');
+    const waLink = document.querySelector('a[href*="wa.me/923043962008"]');
+    if(tgLink && cl.telegram?.url) {
+      tgLink.href = cl.telegram.url;
+      const span = tgLink.querySelector('.contact-btn-text span');
+      if(span && cl.telegram.username) span.textContent = cl.telegram.username;
+    }
+    if(waLink && cl.whatsapp?.url){
+      waLink.href = cl.whatsapp.url;
+      const span = waLink.querySelector('.contact-btn-text span');
+      if(span && cl.whatsapp.number) span.textContent = cl.whatsapp.number;
+    }
+  }
+
+  // Contact — Help card
+  if(cfg.contact?.help){
+    const h = cfg.contact.help;
+    const tgLink = document.querySelector('a[href*="t.me/DigitalTriicks"]');
+    const waLink = document.querySelector('a[href*="chat.whatsapp.com"]');
+    if(tgLink && h.telegram?.url){
+      tgLink.href = h.telegram.url;
+      const span = tgLink.querySelector('.contact-btn-text span');
+      if(span && h.telegram.username) span.textContent = h.telegram.username;
+    }
+    if(waLink && h.whatsapp?.url){
+      waLink.href = h.whatsapp.url;
+      const strong = waLink.querySelector('.contact-btn-text strong');
+      if(strong && h.whatsapp.label) strong.textContent = h.whatsapp.label;
+    }
+  }
+})();
+</script>
+</body>
+</html>
