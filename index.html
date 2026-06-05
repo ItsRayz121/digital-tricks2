@@ -1867,10 +1867,17 @@ document.querySelectorAll('.aff-card').forEach(card => {
   if(cfg.stats){
     const els = document.querySelectorAll('.stat-item');
     cfg.stats.forEach((s, i) => {
-      if(!els[i]) return;
+      if(!els[i] || !s.value) return;
       const v = els[i].querySelector('.stat-num');
       const l = els[i].querySelector('.stat-lbl');
-      if(v && s.value) v.textContent = s.value;
+      if(v){
+        // parse number + suffix from value like "6K+" or "200+"
+        const num = parseFloat(s.value);
+        const suf = s.value.replace(/[\d.]/g,'').trim();
+        v.dataset.target  = isNaN(num) ? '0' : String(num);
+        v.dataset.suffix  = suf;
+        v.textContent     = s.value;
+      }
       if(l && s.label) l.textContent = s.label;
     });
   }
@@ -1883,20 +1890,17 @@ document.querySelectorAll('.aff-card').forEach(card => {
 
   // ── Socials ────────────────────────────────────────────
   if(cfg.socials && cfg.socials.length){
-    const grid = document.querySelector('.soc-grid');
-    if(grid){
-      const cards = grid.querySelectorAll('a.soc-card');
-      cfg.socials.forEach((s, i) => {
-        if(!cards[i]) return;
-        if(s.url) cards[i].href = s.url;
-        const platform = cards[i].querySelector('.soc-platform');
-        const handle   = cards[i].querySelector('.soc-handle');
-        const btn      = cards[i].querySelector('.soc-btn');
-        if(platform && s.platform) platform.textContent = s.platform;
-        if(handle   && s.handle)   handle.textContent   = s.handle;
-        if(btn      && s.label)    btn.textContent       = s.label;
-      });
-    }
+    const cards = document.querySelectorAll('.soc-grid a.soc-card');
+    cfg.socials.forEach((s, i) => {
+      if(!cards[i]) return;
+      if(s.url)      cards[i].href = s.url;
+      const platform = cards[i].querySelector('.soc-platform');
+      const handle   = cards[i].querySelector('.soc-handle');
+      const btn      = cards[i].querySelector('.soc-btn');
+      if(platform && s.platform) platform.textContent = s.platform;
+      if(handle   && s.handle)   handle.textContent   = s.handle;
+      if(btn      && s.label)    btn.textContent       = s.label;
+    });
   }
 
   // ── Affiliates ─────────────────────────────────────────

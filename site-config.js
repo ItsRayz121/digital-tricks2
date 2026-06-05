@@ -13,10 +13,10 @@ const SITE_CONFIG_DEFAULTS = {
   ],
 
   socials: [
-    { platform: "YouTube",  label: "Subscribe",      url: "https://youtube.com/@digitaltricks70",    icon: "yt" },
-    { platform: "Telegram", label: "Join Channel",   url: "https://t.me/DigitalTriicks",             icon: "tg" },
-    { platform: "Twitter",  label: "Follow",         url: "https://twitter.com/digitaltricks70",     icon: "tw" },
-    { platform: "WhatsApp", label: "Message",        url: "https://wa.me/923043962008",              icon: "wa" }
+    { platform: "YouTube",  handle: "@digitaltricks70", label: "Subscribe",    url: "https://youtube.com/@digitaltricks70",  icon: "yt" },
+    { platform: "Telegram", handle: "@DigitalTriicks",  label: "Join Channel", url: "https://t.me/DigitalTriicks",           icon: "tg" },
+    { platform: "Twitter",  handle: "@Toheedahmed1",    label: "Follow",       url: "https://x.com/Toheedahmed1",           icon: "tw" },
+    { platform: "WhatsApp", handle: "+92-304-3962008",  label: "Message",      url: "https://wa.me/923043962008",           icon: "wa" }
   ],
 
   affiliates: [
