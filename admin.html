@@ -391,17 +391,23 @@ const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 const SB_HDR = { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
 
 async function sbGet(){
-  const r = await fetch(`${SB_URL}/rest/v1/site_config?id=eq.1&select=config`, { headers: SB_HDR });
+  const r = await fetch(`${SB_URL}/rest/v1/site_config?select=config&order=id.asc&limit=1`, {
+    headers: { ...SB_HDR, 'Cache-Control': 'no-cache' }
+  });
   const d = await r.json();
+  console.log('[DT Admin] Loaded from Supabase:', d);
   return d[0]?.config || null;
 }
 
 async function sbSave(cfg){
-  const r = await fetch(`${SB_URL}/rest/v1/site_config?id=eq.1`, {
-    method: 'PATCH',
-    headers: { ...SB_HDR, Prefer: 'return=representation' },
-    body: JSON.stringify({ config: cfg })
+  // UPSERT — inserts if row missing, updates if exists
+  const r = await fetch(`${SB_URL}/rest/v1/site_config`, {
+    method: 'POST',
+    headers: { ...SB_HDR, Prefer: 'resolution=merge-duplicates,return=representation' },
+    body: JSON.stringify({ id: 1, config: cfg })
   });
+  const body = await r.json();
+  console.log('[DT Admin] Save response:', r.status, body);
   return r;
 }
 

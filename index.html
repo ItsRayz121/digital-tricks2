@@ -1945,8 +1945,10 @@ document.querySelectorAll('.aff-card').forEach(card => {
   }
 
   // Load config on page open
-  db.from('site_config').select('config').eq('id', 1).single()
-    .then(({ data, error }) => { if(data && !error) applyConfig(data.config); });
+  db.from('site_config').select('config').order('id', { ascending: true }).limit(1)
+    .then(({ data, error }) => {
+      if(data && data.length > 0 && !error) applyConfig(data[0].config);
+    });
 
   // Real-time: update instantly when admin saves
   db.channel('site-live')
