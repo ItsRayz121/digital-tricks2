@@ -1863,24 +1863,64 @@ document.querySelectorAll('.aff-card').forEach(card => {
   let cfg;
   try { cfg = JSON.parse(saved); } catch(e){ return; }
 
-  // Stats
+  // ── Stats ──────────────────────────────────────────────
   if(cfg.stats){
     const els = document.querySelectorAll('.stat-item');
     cfg.stats.forEach((s, i) => {
       if(!els[i]) return;
-      const v = els[i].querySelector('.stat-value');
-      const l = els[i].querySelector('.stat-label');
+      const v = els[i].querySelector('.stat-num');
+      const l = els[i].querySelector('.stat-lbl');
       if(v && s.value) v.textContent = s.value;
       if(l && s.label) l.textContent = s.label;
     });
   }
 
-  // Contact — Collaboration card
+  // ── Profile photo ──────────────────────────────────────
+  if(cfg.profilePhoto){
+    const img = document.querySelector('.prof-img img');
+    if(img) img.src = cfg.profilePhoto;
+  }
+
+  // ── Socials ────────────────────────────────────────────
+  if(cfg.socials && cfg.socials.length){
+    const grid = document.querySelector('.soc-grid');
+    if(grid){
+      const cards = grid.querySelectorAll('a.soc-card');
+      cfg.socials.forEach((s, i) => {
+        if(!cards[i]) return;
+        if(s.url) cards[i].href = s.url;
+        const platform = cards[i].querySelector('.soc-platform');
+        const handle   = cards[i].querySelector('.soc-handle');
+        const btn      = cards[i].querySelector('.soc-btn');
+        if(platform && s.platform) platform.textContent = s.platform;
+        if(handle   && s.handle)   handle.textContent   = s.handle;
+        if(btn      && s.label)    btn.textContent       = s.label;
+      });
+    }
+  }
+
+  // ── Affiliates ─────────────────────────────────────────
+  if(cfg.affiliates && cfg.affiliates.length){
+    const cards = document.querySelectorAll('.aff-card');
+    cfg.affiliates.forEach((a, i) => {
+      if(!cards[i]) return;
+      const name = cards[i].querySelector('.aff-name');
+      const desc = cards[i].querySelector('.aff-desc');
+      const deal = cards[i].querySelector('.aff-deal');
+      const link = cards[i].querySelector('a.btn');
+      if(name && a.exchange) name.textContent = a.exchange;
+      if(desc && a.deal)     desc.textContent = a.deal;
+      if(deal && a.code)     deal.textContent = 'Referral Code: ' + a.code;
+      if(link && a.url)      link.href        = a.url;
+    });
+  }
+
+  // ── Contact — Collaboration ────────────────────────────
   if(cfg.contact?.collaboration){
     const cl = cfg.contact.collaboration;
     const tgLink = document.querySelector('a[href*="t.me/Toheedahmed1"]');
-    const waLink = document.querySelector('a[href*="wa.me/923043962008"]');
-    if(tgLink && cl.telegram?.url) {
+    const waLink = document.querySelector('.contact-card:first-child a[href*="wa.me"]');
+    if(tgLink && cl.telegram?.url){
       tgLink.href = cl.telegram.url;
       const span = tgLink.querySelector('.contact-btn-text span');
       if(span && cl.telegram.username) span.textContent = cl.telegram.username;
@@ -1892,7 +1932,7 @@ document.querySelectorAll('.aff-card').forEach(card => {
     }
   }
 
-  // Contact — Help card
+  // ── Contact — Help ─────────────────────────────────────
   if(cfg.contact?.help){
     const h = cfg.contact.help;
     const tgLink = document.querySelector('a[href*="t.me/DigitalTriicks"]');

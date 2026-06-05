@@ -189,11 +189,42 @@
       <span class="nav-item active" data-panel="stats">Stats</span>
       <span class="nav-item" data-panel="socials">Socials</span>
       <span class="nav-item" data-panel="affiliates">Affiliates</span>
+      <span class="nav-item" data-panel="profile">Profile Photo</span>
       <span class="nav-item" data-panel="contact">Contact Info</span>
       <span class="nav-item" data-panel="export">Export / Deploy</span>
     </nav>
 
     <div class="main">
+
+      <!-- PROFILE PHOTO -->
+      <div class="panel" id="panel-profile">
+        <div class="section-title">Profile Photo</div>
+        <div class="card">
+          <div class="card-title">Hero circle image</div>
+          <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+            <div id="photo-preview-wrap" style="flex-shrink:0">
+              <img id="photo-preview" src="profile.jpeg" alt="Profile preview"
+                style="width:120px;height:120px;border-radius:50%;object-fit:cover;
+                       border:2px solid var(--gold);display:block">
+            </div>
+            <div style="flex:1;min-width:220px">
+              <div class="field" style="margin-bottom:14px">
+                <label>Upload new photo (from your computer)</label>
+                <input type="file" id="photo-file" accept="image/*"
+                  style="padding:8px 0;border:none;background:none;color:var(--platinum);font-size:13px;cursor:pointer">
+              </div>
+              <div class="field" style="margin-bottom:14px">
+                <label>Or paste an image URL</label>
+                <input type="url" id="photo-url" placeholder="https://example.com/photo.jpg">
+              </div>
+              <button class="btn btn-gold" style="margin-top:4px" onclick="applyPhoto()">Apply Photo</button>
+              <p style="font-size:11px;color:var(--gray);margin-top:10px;line-height:1.6">
+                <strong style="color:var(--platinum)">Tip:</strong> To make it permanent — place the new image in your project folder as <code>profile.jpeg</code> and push to GitHub.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- STATS -->
       <div class="panel active" id="panel-stats">
@@ -375,6 +406,7 @@ function renderAll(){
   renderSocials();
   renderAffiliates();
   renderContact();
+  renderProfile();
 }
 
 // STATS
@@ -407,10 +439,12 @@ function renderSocials(){
   el.innerHTML = '';
   (config.socials || []).forEach((s, i) => {
     el.insertAdjacentHTML('beforeend', `
-      <div class="row" data-social="${i}">
-        <div class="field"><label>Platform</label>
+      <div class="row" data-social="${i}" style="flex-wrap:wrap">
+        <div class="field"><label>Platform Name</label>
           <input type="text" data-f="platform" value="${esc(s.platform)}" placeholder="YouTube"></div>
-        <div class="field"><label>Label</label>
+        <div class="field"><label>Handle / Username</label>
+          <input type="text" data-f="handle" value="${esc(s.handle||'')}" placeholder="@digitaltricks70"></div>
+        <div class="field"><label>Button Label</label>
           <input type="text" data-f="label" value="${esc(s.label)}" placeholder="Subscribe"></div>
         <div class="field" style="flex:2"><label>URL</label>
           <input type="url" data-f="url" value="${esc(s.url)}" placeholder="https://..."></div>
@@ -419,7 +453,7 @@ function renderSocials(){
   });
 }
 function addSocial(){
-  config.socials.push({platform:'',label:'',url:'',icon:''});
+  config.socials.push({platform:'',handle:'',label:'',url:'',icon:''});
   renderSocials();
 }
 function removeSocial(i){
@@ -542,6 +576,50 @@ function exportConfig(){
   });
   a.click();
 }
+
+// ── Profile photo ─────────────────────────────────────────
+function renderProfile(){
+  const stored = config.profilePhoto || 'profile.jpeg';
+  document.getElementById('photo-preview').src = stored;
+  document.getElementById('photo-url').value = stored.startsWith('data:') ? '' : stored;
+}
+
+function applyPhoto(){
+  const fileInput = document.getElementById('photo-file');
+  const urlInput  = document.getElementById('photo-url').value.trim();
+
+  if(fileInput.files && fileInput.files[0]){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      config.profilePhoto = e.target.result;
+      document.getElementById('photo-preview').src = e.target.result;
+      localStorage.setItem('dt-admin-config', JSON.stringify(config));
+      const s = document.getElementById('save-status');
+      s.style.display = 'inline';
+      setTimeout(()=> s.style.display='none', 2500);
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+  } else if(urlInput){
+    config.profilePhoto = urlInput;
+    document.getElementById('photo-preview').src = urlInput;
+    localStorage.setItem('dt-admin-config', JSON.stringify(config));
+    const s = document.getElementById('save-status');
+    s.style.display = 'inline';
+    setTimeout(()=> s.style.display='none', 2500);
+  }
+}
+
+// live preview on file select
+document.addEventListener('DOMContentLoaded', ()=>{
+  const fi = document.getElementById('photo-file');
+  if(fi) fi.addEventListener('change', ()=>{
+    const f = fi.files[0];
+    if(!f) return;
+    const r = new FileReader();
+    r.onload = e => document.getElementById('photo-preview').src = e.target.result;
+    r.readAsDataURL(f);
+  });
+});
 
 function esc(str){
   return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
