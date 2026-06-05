@@ -399,8 +399,8 @@ async function sbGet(){
 async function sbSave(cfg){
   const r = await fetch(`${SB_URL}/rest/v1/site_config?id=eq.1`, {
     method: 'PATCH',
-    headers: { ...SB_HDR, Prefer: 'return=minimal' },
-    body: JSON.stringify({ config: cfg, updated_at: new Date().toISOString() })
+    headers: { ...SB_HDR, Prefer: 'return=representation' },
+    body: JSON.stringify({ config: cfg })
   });
   return r;
 }
